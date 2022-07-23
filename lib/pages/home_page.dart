@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'navigations/ExampleCameraOverlay.dart';
 import 'navigations/main_page.dart';
 import 'navigations/camera_page.dart';
 import 'navigations/graph_page.dart';
@@ -16,7 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 1;
   List<Widget> _screen = [
-    //CameraPage(),
+    UseCameraPage(),
     GraphPage(),
     MemoryPage(),
     MyPage()

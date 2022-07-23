@@ -1,68 +1,15 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:ocr/pages/navigations/ExampleCameraOverlay.dart';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter_camera_overlay/flutter_camera_overlay.dart';
 import 'package:flutter_camera_overlay/model.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-class UseCameraPage extends StatefulWidget {
-  static const routeName = '/camera-page';
-
-  const UseCameraPage({Key? key}) : super(key: key);
-
-  @override
-  _UseCameraPageState createState() => _UseCameraPageState();
-}
-
-class _UseCameraPageState extends State<UseCameraPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        //title: Text(widget.title),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                children: [
-
-
-
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ExampleCameraOverlay()),
-                        // MaterialPageRoute는 머테리얼 디자인으로 작성된 페이지 사이에 화면 전환을 할 때 사용된다.
-                        // MaterialPageRoute는 안드로이드와 iOS 각 플랫폼에 맞는 화면 전환을 지원해준다.
-                      );
-                    },
-                    child: Text('카메라'),
-                  ),
-
-                  ElevatedButton(
-                    onPressed: () {
-                    //ㅅㅓ버로 전송하는 코드 적으면 됨
-
-                    },
-                    child: Text('전송'),
-                  ),
-
-
-                ],
-              )),
-        ],
-      ),
-    );
-  }
-
+main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    const ExampleCameraOverlay(),
+  );
 }
 
 class ExampleCameraOverlay extends StatefulWidget {
@@ -97,11 +44,11 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
                     format = OverlayFormat.cardID3;
                   });
                   break;
-                // case (2):
-                //   setState(() {
-                //     format = OverlayFormat.simID000;
-                //   });
-                //   break;
+                case (2):
+                  setState(() {
+                    format = OverlayFormat.simID000;
+                  });
+                  break;
               }
             },
             items: const [
@@ -111,7 +58,7 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
               ),
               BottomNavigationBarItem(
                   icon: Icon(Icons.contact_mail), label: 'US ID'),
-             // BottomNavigationBarItem(icon: Icon(Icons.sim_card), label: 'Sim'),
+              BottomNavigationBarItem(icon: Icon(Icons.sim_card), label: 'Sim'),
             ],
           ),
           backgroundColor: Colors.white,
@@ -178,11 +125,4 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
           ),
         ));
   }
-}
-
-void showToast(String message){
-  Fluttertoast.showToast(msg: message,
-  backgroundColor: Colors.blue,
-  toastLength: Toast.LENGTH_SHORT,
-  gravity: ToastGravity.BOTTOM);
 }

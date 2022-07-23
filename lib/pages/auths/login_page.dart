@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart'; //쿠퍼티노 위젯
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/auth_provider.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = "/login";
@@ -35,38 +39,38 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // Future<void> _submit() async {
-  //   if (formKey.currentState!.validate() == false) {
-  //     return;
-  //   } else {
-  //     formKey.currentState!.save();
-  //     try {
-  //       setState(() {
-  //         _isLoading = true;
-  //       });
-  //       await Provider.of<AuthProvider>(context, listen: false)
-  //           .login(_id, _password);
-  //       setState(() {
-  //         _isLoading = false;
-  //       });
-  //       if (Provider.of<AuthProvider>(context, listen: false).isAuth) {
-  //         await FlutterSecureStorage().write(key: "userEmail", value: _id);
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(
-  //             content: Text("로그인에 성공하였습니다."),
-  //             duration: Duration(seconds: 1),
-  //           ),
-  //         );
-  //         Navigator.of(context).pop();
-  //       }
-  //     } catch (error) {
-  //       setState(() {
-  //         _isLoading = false;
-  //       });
-  //       _showErrorDialog("아이디 또는 비밀번호를 확인해주세요.");
-  //     }
-  //   }
-  // }
+  Future<void> _submit() async {
+    if (formKey.currentState!.validate() == false) {
+      return;
+    } else {
+      formKey.currentState!.save();
+      try {
+        setState(() {
+          _isLoading = true;
+        });
+        await Provider.of<AuthProvider>(context, listen: false)
+            .login(_id, _password);
+        setState(() {
+          _isLoading = false;
+        });
+        if (Provider.of<AuthProvider>(context, listen: false).isAuth) {
+          await FlutterSecureStorage().write(key: "userEmail", value: _id);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("로그인에 성공하였습니다."),
+              duration: Duration(seconds: 1),
+            ),
+          );
+          Navigator.of(context).pop();
+        }
+      } catch (error) {
+        setState(() {
+          _isLoading = false;
+        });
+        _showErrorDialog("아이디 또는 비밀번호를 확인해주세요.");
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

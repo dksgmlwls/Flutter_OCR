@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart'; //쿠퍼티노 위젯
-import 'package:flutter/material.dart';
 import 'package:ocr/pages/auths/login_page.dart';
+import 'package:ocr/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 
 class SignUpPage extends StatefulWidget {
@@ -16,49 +17,49 @@ class _SignUpPageState extends State<SignUpPage> {
   late String _name;
   late String _password;
   late String _email;
-  late String _phoneNumber;
-  //
-  // void _showErrorDialog(String message) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (ctx) => AlertDialog(
-  //       title: Text(
-  //         "회원가입 실패",
-  //         style: TextStyle(fontWeight: FontWeight.bold),
-  //       ),
-  //       content: Text(message),
-  //       actions: <Widget>[
-  //         FlatButton(
-  //           child: Text("예"),
-  //           onPressed: () {
-  //             Navigator.of(ctx).pop();
-  //           },
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-  //
-  // Future<void> _submit() async {
-  //   if (formKey.currentState!.validate() == false) {
-  //     return;
-  //   } else {
-  //     formKey.currentState!.save();
-  //     try {
-  //       await Provider.of<AuthProvider>(context, listen: false)
-  //           .signUp(_name, _phoneNumber, _email, _password);
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text("가입이 완료되었습니다. 로그인을 진행해주세요."),
-  //           duration: Duration(seconds: 1),
-  //         ),
-  //       );
-  //       Navigator.of(context).pop();
-  //     } catch (error) {
-  //       _showErrorDialog("이미 존재하는 계정입니다.");
-  //     }
-  //   }
-  // }
+  late String _id;
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(
+          "회원가입 실패",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        content: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text("예"),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _submit() async {
+    if (formKey.currentState!.validate() == false) {
+      return;
+    } else {
+      formKey.currentState!.save();
+      try {
+        await Provider.of<AuthProvider>(context, listen: false)
+            .signUp(_name, _id, _email, _password);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("가입이 완료되었습니다. 로그인을 진행해주세요."),
+            duration: Duration(seconds: 1),
+          ),
+        );
+        Navigator.of(context).pop();
+      } catch (error) {
+        _showErrorDialog("이미 존재하는 계정입니다.");
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,16 +102,16 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
                 SizedBox(height: 20),
-                TitleTextComponent("휴대폰 번호"),
+                TitleTextComponent("아이디"),
                 Container(
                   child: TextFormField(
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                      hintText: "(예시) 01012341234",
+                      hintText: "아이디를 입력해주세요.",
                     ),
                     onSaved: (value) {
-                      _phoneNumber = value!;
+                      _id = value!;
                     },
                     // validator: (value) {
                     //   if (value!.length < 10) {

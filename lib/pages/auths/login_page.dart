@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart'; //쿠퍼티노 위젯
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ocr/findUserInfo_page.dart';
+import 'package:ocr/pages/home_page.dart';
+
 import 'package:ocr/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -188,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushNamed(FindUserInfoPage.routeName);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => FindUserInfoPage()));
                   },
                 ),
               ],

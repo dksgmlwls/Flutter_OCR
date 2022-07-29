@@ -61,8 +61,6 @@ class FormScreenState extends State<FormScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => LoginPage()),
-                        // MaterialPageRoute는 머테리얼 디자인으로 작성된 페이지 사이에 화면 전환을 할 때 사용된다.
-                        // MaterialPageRoute는 안드로이드와 iOS 각 플랫폼에 맞는 화면 전환을 지원해준다.
                       );
                     },
                     child: Text('로그인'),
@@ -73,8 +71,6 @@ class FormScreenState extends State<FormScreen> {
                       Navigator.push( // SecondPage로 화면 이동 코드.
                         context,
                         MaterialPageRoute(builder: (context) => SignUpPage()),
-                        // MaterialPageRoute는 머테리얼 디자인으로 작성된 페이지 사이에 화면 전환을 할 때 사용된다.
-                        // MaterialPageRoute는 안드로이드와 iOS 각 플랫폼에 맞는 화면 전환을 지원해준다.
                       );
                     },
                     child: Text('회원가입'),
@@ -86,8 +82,6 @@ class FormScreenState extends State<FormScreen> {
                       Navigator.push( // SecondPage로 화면 이동 코드.
                         context,
                         MaterialPageRoute(builder: (context) => HomePage()),
-                        // MaterialPageRoute는 머테리얼 디자인으로 작성된 페이지 사이에 화면 전환을 할 때 사용된다.
-                        // MaterialPageRoute는 안드로이드와 iOS 각 플랫폼에 맞는 화면 전환을 지원해준다.
                       );
                     },
                     child: Text('메인화면'),

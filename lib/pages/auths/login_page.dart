@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart'; //쿠퍼티노 위젯
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
+import '../../findUserInfo_page.dart';
 import '../../providers/auth_provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -113,10 +114,10 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextFormField(
-                        keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
-                          hintText: "계정 이메일을 입력해주세요.",
+                          hintText: "아이디를 입력해주세요.",
                         ),
                         onSaved: (value) {
                           _id = value;
@@ -173,8 +174,8 @@ class _LoginPageState extends State<LoginPage> {
                         textAlign: TextAlign.center),
                   ),
                   onPressed: () {
-                    //_submit();
-                    Navigator.of(context).pop();
+                    _submit();
+                    //Navigator.of(context).pop();
                   },
                 ),
                 FlatButton(
@@ -186,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   onPressed: () {
-                    //Navigator.of(context).pushNamed(FindUserInfoPage.routeName);
+                    Navigator.of(context).pushNamed(FindUserInfoPage.routeName);
                   },
                 ),
               ],

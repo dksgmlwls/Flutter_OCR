@@ -105,7 +105,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 TitleTextComponent("아이디"),
                 Container(
                   child: TextFormField(
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                       hintText: "아이디를 입력해주세요.",
@@ -199,8 +199,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         textAlign: TextAlign.center),
                   ),
                   onPressed: () {
-                    //_submit();
-                    Navigator.of(context).pushNamed(LoginPage.routeName);
+                    _submit();
+                    //Navigator.of(context).pushNamed(LoginPage.routeName);
 
                   },
                 ),

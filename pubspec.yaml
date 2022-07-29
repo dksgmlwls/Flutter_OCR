@@ -16,6 +16,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 version: 1.0.0+1
+homepage: https://github.com/matwright/flutter_camera_overlay
+repository: https://github.com/matwright/flutter_camera_overlay
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
@@ -29,8 +31,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  camera: ^0.9.4
+  camera_web: ^0.2.1+1
   #shared_preferences: ^0.5.12
   provider: ^4.1.2
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -40,9 +46,8 @@ dependencies:
   google_fonts: ^1.1.2 #to import google fonts and text theme
   flutter_secure_storage: ^3.3.5
   fluttertoast: ^7.1.6
-  camera: ^0.9.4
-  flutter_camera_overlay: ^0.1.1
-  #camera_web: ^0.2.1+1
+  #camera: ^0.10.0
+  #flutter_camera_overlay: ^0.1.1
   path: ^1.7.0
   #path_provider: ^1.6.18
   #image_picker: ^0.6.7+11

@@ -4,6 +4,19 @@ A new Flutter project.
 
 ## Getting Started
 
+
+```dart
+import 'package:flutter_camera_overlay/flutter_camera_overlay.dart';
+```
+
+CameraOverlay(
+snapshot.data!.first,
+CardOverlay.byFormat(format),
+(XFile file) => print(file.path),
+info: 'Position your ID card within the rectangle and ensure the image is perfectly readable.',
+label: 'Scanning ID Card');
+
+
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:

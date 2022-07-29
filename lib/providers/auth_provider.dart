@@ -19,7 +19,7 @@ class AuthProvider with ChangeNotifier {
 
   // 1. 로그인
   Future<void> login(String? id, String? password) async {
-    final url = Uri.parse('http://192.168.0.7:4000/api/User/login');
+    final url = Uri.parse('https://ocr.dfxlab.kr/user/login/');
     try {
       final response = await http.post(
         url,
@@ -51,7 +51,7 @@ class AuthProvider with ChangeNotifier {
   // 3. 회원가입
   Future<void> signUp(
       String name, String phoneNumber, String email, String password) async {
-    final url = Uri.parse('http://192.168.0.7:4000/api/User/register');
+    final url = Uri.parse('https://ocr.dfxlab.kr/user/signup/');
     try {
       final response = await http.post(
         url,

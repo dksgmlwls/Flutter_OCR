@@ -1,9 +1,10 @@
 import 'dart:io';
-
+import 'package:ocr/pages/navigations/model.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter_camera_overlay/flutter_camera_overlay.dart';
-import 'package:flutter_camera_overlay/model.dart';
+import 'package:ocr/pages/navigations/flutter_camera_overlay.dart';
+import 'model.dart';
+
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();

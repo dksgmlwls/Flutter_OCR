@@ -20,7 +20,8 @@ homepage: https://github.com/matwright/flutter_camera_overlay
 repository: https://github.com/matwright/flutter_camera_overlay
 
 environment:
-  sdk: ">=2.17.6 <3.0.0"
+  #sdk: ">=2.17.6 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -43,14 +44,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_svg_provider: ^0.1.8 #to use svg images
-  google_fonts: ^1.1.2 #to import google fonts and text theme
+  google_fonts: ^2.3.0 #to import google fonts and text theme
   flutter_secure_storage: ^3.3.5
   fluttertoast: ^7.1.6
   #camera: ^0.10.0
-  #flutter_camera_overlay: ^0.1.1
+  flutter_camera_overlay: ^0.1.1
   path: ^1.7.0
   #path_provider: ^1.6.18
-  #image_picker: ^0.6.7+11
+  image_picker: ^0.8.4+4
 
 
 dev_dependencies:

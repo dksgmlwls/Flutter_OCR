@@ -13,6 +13,9 @@ main() {
 }
 
 class ExampleCameraOverlay extends StatefulWidget {
+
+  static const routeName = '/graph-page';
+
   const ExampleCameraOverlay({Key? key}) : super(key: key);
 
   @override
@@ -111,13 +114,13 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
                       },
                     ),
                     info:
-                    '틀에 맞춰 촬영을 해주세요.',
-                    label: 'OCR');
+                    'Position your ID card within the rectangle and ensure the image is perfectly readable.',
+                    label: 'Scanning ID Card');
               } else {
                 return const Align(
                     alignment: Alignment.center,
                     child: Text(
-                      '아직 촬영된 이미지가 없습니다',
+                      'Fetching cameras',
                       style: TextStyle(color: Colors.black),
                     ));
               }

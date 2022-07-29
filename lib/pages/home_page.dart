@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
   List<Widget> _screen = [
     UseCameraPage(),
     GraphPage(),
@@ -36,11 +36,11 @@ class _HomePageState extends State<HomePage> {
         items: [
           BottomNavigationBarItem(
             label: '카메라',
-            icon: Icon(Icons.wb_sunny),
+            icon: Icon(Icons.aspect_ratio_outlined ),
           ),
           BottomNavigationBarItem(
             label: '그래프',
-            icon: Icon(Icons.cloud),
+            icon: Icon(Icons.auto_graph_rounded),
           ),
           BottomNavigationBarItem(
             label: '기록',
@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             label: '내 정보',
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.assignment_ind_outlined),
           ),
         ],
         onTap: (int index) {

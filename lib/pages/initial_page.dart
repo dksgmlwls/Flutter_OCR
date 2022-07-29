@@ -8,7 +8,6 @@ class InitialPage extends StatefulWidget {
 }
 
 class _InitialPageState extends State<InitialPage> {
-  var _pageController = PageController();
   var _index = 0;
 
   @override
@@ -29,7 +28,6 @@ class _InitialPageState extends State<InitialPage> {
                     _index = currentIndex;
                   });
                 },
-                controller: _pageController,
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
 

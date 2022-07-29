@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart'; //쿠퍼티노 위젯
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ocr/findUserInfo_page.dart';
+import 'package:ocr/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../findUserInfo_page.dart';
-import '../../providers/auth_provider.dart';
+
 
 class LoginPage extends StatefulWidget {
   static const routeName = "/login";

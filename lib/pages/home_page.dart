@@ -8,23 +8,36 @@ import 'navigations/my_page.dart';
 
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
+  // const HomePage({Key? key}) : super(key: key);
+  final String path;
+  const HomePage(this.path);
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
+   int _selectedIndex = 0;
+
+
   List<Widget> _screen = [
-    UseCameraPage(),
+    UseCameraPage("no"),
     GraphPage(),
     MemoryPage(),
     MyPage()
   ];
 
+
   @override
   Widget build(BuildContext context) {
+   // int _selectedIndex = 0;
+
+    List<Widget> _screen = [
+      UseCameraPage(widget.path==null? "no" : widget.path),
+      GraphPage(),
+      MemoryPage(),
+      MyPage()
+    ];
+
     return Scaffold(
       body: _screen[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(

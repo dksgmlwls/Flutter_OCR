@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart'; //쿠퍼티노 위젯
 import 'package:ocr/pages/auths/login_page.dart';
+import 'package:checkbox_formfield/checkbox_formfield.dart';
 import 'package:ocr/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -14,9 +15,9 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final formKey = GlobalKey<FormState>();
-  late String _name;
-  late String _password;
   late String _email;
+  late String _password;
+  late String _name;
   late String _phoneNumber;
 
   void _showErrorDialog(String message) {
@@ -56,6 +57,7 @@ class _SignUpPageState extends State<SignUpPage> {
         );
         Navigator.of(context).pop();
       } catch (error) {
+
         _showErrorDialog("이미 존재하는 계정입니다.");
       }
     }
@@ -113,11 +115,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     onSaved: (value) {
                       _phoneNumber = value!;
                     },
-                    // validator: (value) {
-                    //   if (value!.length < 10) {
-                    //     return "휴대폰 번호는 10자 이하입니다.";
-                    //   }
-                    // },
+                    validator: (value) {
+                      if (value!.length < 10) {
+                        return "휴대폰 번호는 10자 이하입니다.";
+                      }
+                    },
                   ),
                 ),
                 SizedBox(height: 20),
@@ -132,11 +134,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     onSaved: (value) {
                       _email = value!;
                     },
-                    // validator: (value) {
-                    //   if (value!.length < 10) {
-                    //     return "이메일 형식에 맞게 입력해주세요.";
-                    //   }
-                    // },
+                    validator: (value) {
+                      if (value!.length < 10) {
+                        return "이메일 형식에 맞게 입력해주세요.";
+                      }
+                    },
                   ),
                 ),
                 SizedBox(height: 20),
@@ -161,11 +163,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     onSaved: (value) {
                       _password = value!;
                     },
-                    // validator: (value) {
-                    //   if (value!.length < 10) {
-                    //     return "비밀번호는 10자 이상입니다.";
-                    //   }
-                    // },
+                    validator: (value) {
+                      if (value!.length < 10) {
+                        return "비밀번호는 10자 이상입니다.";
+                      }
+                    },
                   ),
                 ),
                 SizedBox(height: 20),
@@ -180,7 +182,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
                 SizedBox(height: 20),
-                //CheckBoxComponent("개인정보 수집 및 이용 동의 (필수)"),
+                CheckBoxComponent("개인정보 수집 및 이용 동의 (필수)"),
                 SizedBox(height: 20),
                 FlatButton(
                   child: Container(
@@ -247,38 +249,38 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  // Widget CheckBoxComponent(String keyword) {
-  //   return CheckboxListTileFormField(
-  //     validator: (value) {
-  //       if (value == false) {
-  //         return "필수 동의 항목입니다.";
-  //       } else {
-  //         return null;
-  //       }
-  //     },
-  //     title: Row(
-  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //       children: [
-  //         Text(
-  //           keyword,
-  //           style: TextStyle(
-  //             fontSize: 12,
-  //           ),
-  //         ),
-  //         FlatButton(
-  //           child: Container(
-  //             padding: EdgeInsets.all(5),
-  //             decoration: BoxDecoration(
-  //                 borderRadius: BorderRadius.circular(5), color: Colors.grey),
-  //             child: Text(
-  //               "자세히",
-  //               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-  //             ),
-  //           ),
-  //           onPressed: () {},
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  Widget CheckBoxComponent(String keyword) {
+    return CheckboxListTileFormField(
+      validator: (value) {
+        if (value == false) {
+          return "필수 동의 항목입니다.";
+        } else {
+          return null;
+        }
+      },
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            keyword,
+            style: TextStyle(
+              fontSize: 12,
+            ),
+          ),
+          FlatButton(
+            child: Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5), color: Colors.grey),
+              child: Text(
+                "자세히",
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+              ),
+            ),
+            onPressed: () {},
+          ),
+        ],
+      ),
+    );
+  }
 }

@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
       //   visualDensity: VisualDensity.adaptivePlatformDensity,
       title: 'Flutter Demo',
       home: FormScreen(title: 'OCR'),
-     // ),
+      // ),
     );
   }
 }
@@ -81,7 +81,7 @@ class FormScreenState extends State<FormScreen> {
 
                       Navigator.push( // SecondPage로 화면 이동 코드.
                         context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
+                        MaterialPageRoute(builder: (context) => HomePage("no")),
                       );
                     },
                     child: Text('메인화면'),

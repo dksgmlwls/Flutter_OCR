@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter_camera_overlay/flutter_camera_overlay.dart';
 import 'package:flutter_camera_overlay/model.dart';
-
+import 'package:ocr/pages/navigations/camera_page.dart';
+// import '../pages/navigations/camera_page.dart';
+import '../pages/home_page.dart';
+import 'package:image_picker/image_picker.dart';
 main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
@@ -26,44 +29,56 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
   OverlayFormat format = OverlayFormat.cardID1;
   int tab = 0;
 
+  File? _image;
+  final picker = ImagePicker();
+
+  // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
+  Future getImage(ImageSource imageSource) async {
+    print("getImage");
+    final image = await picker.pickImage(source: imageSource);
+
+    setState(() {
+      _image = File(image!.path); // 가져온 이미지를 _image에 저장
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: tab,
-            onTap: (value) {
-              setState(() {
-                tab = value;
-              });
-              switch (value) {
-                case (0):
-                  setState(() {
-                    format = OverlayFormat.cardID1;
-                  });
-                  break;
-                case (1):
-                  setState(() {
-                    format = OverlayFormat.cardID3;
-                  });
-                  break;
-                case (2):
-                  setState(() {
-                    format = OverlayFormat.simID000;
-                  });
-                  break;
-              }
-            },
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.credit_card),
-                label: 'Bankcard',
-              ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.contact_mail), label: 'US ID'),
-              BottomNavigationBarItem(icon: Icon(Icons.sim_card), label: 'Sim'),
-            ],
-          ),
+          // bottomNavigationBar: BottomNavigationBar(
+          //   currentIndex: tab,
+          //   onTap: (value) {
+          //     setState(() {
+          //       tab = value;
+          //     });
+          //     switch (value) {
+          //       case (0):
+          //         setState(() {
+          //           format = OverlayFormat.cardID1;
+          //         });
+          //         break;
+          //       // case (1):
+          //       //   setState(() {
+          //       //     format = OverlayFormat.cardID3;
+          //       //   });
+          //       //   break;
+          //       // case (2):
+          //       //   setState(() {
+          //       //     format = OverlayFormat.simID000;
+          //       //   });
+          //       //   break;
+          //     }
+          //   },
+          //   items: const [
+          //     BottomNavigationBarItem(
+          //       icon: Icon(Icons.credit_card),
+          //       label: 'Bankcard',
+          //     ),
+          //     // BottomNavigationBarItem(
+          //     //     icon: Icon(Icons.contact_mail), label: 'US ID'),
+          //     // BottomNavigationBarItem(icon: Icon(Icons.sim_card), label: 'Sim'),
+          //   ],
+          // ),
           backgroundColor: Colors.white,
           body: FutureBuilder<List<CameraDescription>?>(
             future: availableCameras(),
@@ -88,12 +103,23 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
                         return AlertDialog(
                             actionsAlignment: MainAxisAlignment.center,
                             backgroundColor: Colors.black,
-                            title: const Text('Capture',
+                            title: const Text('찰칵',
                                 style: TextStyle(color: Colors.white),
                                 textAlign: TextAlign.center),
                             actions: [
                               OutlinedButton(
-                                  onPressed: () => Navigator.of(context).pop(),
+                                // onPressed: () => Navigator.of(context).pop(),
+                                  onPressed: (){
+
+                                    // Navigator.pop(context, file.path);
+
+                                    Navigator.of(context).popUntil((route) => route.isFirst);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) =>
+                                          HomePage(file.path)),
+                                    );
+                                  },
                                   child: const Icon(Icons.close))
                             ],
                             content: SizedBox(
@@ -109,9 +135,12 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
                                             File(file.path),
                                           ),
                                         )),
+
                                   ),
                                 )));
                       },
+
+
                     ),
                     info:
                     'Position your ID card within the rectangle and ensure the image is perfectly readable.',

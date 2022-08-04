@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 class LoginPage extends StatefulWidget {
   static const routeName = "/login";
 
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -19,8 +20,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   var _isLoading = false;
-  late String? _id;
+  late String? _email;
   late String? _password;
+
 
   void _showErrorDialog(String message) {
     showDialog(
@@ -53,12 +55,12 @@ class _LoginPageState extends State<LoginPage> {
           _isLoading = true;
         });
         await Provider.of<AuthProvider>(context, listen: false)
-            .login(_id, _password);
+            .login(_email, _password);
         setState(() {
           _isLoading = false;
         });
         if (Provider.of<AuthProvider>(context, listen: false).isAuth) {
-          await FlutterSecureStorage().write(key: "userEmail", value: _id);
+          await FlutterSecureStorage().write(key: "userEmail", value: _email);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text("로그인에 성공하였습니다."),
@@ -120,10 +122,10 @@ class _LoginPageState extends State<LoginPage> {
                         keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
-                          hintText: "아이디를 입력해주세요.",
+                          hintText: "이메일을 입력해주세요.",
                         ),
                         onSaved: (value) {
-                          _id = value;
+                          _email = value;
                         },
                         // validator: (value) {
                         //   if (value!.length < 10) {
@@ -176,7 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         textAlign: TextAlign.center),
                   ),
-                  onPressed: () {
+                  onPressed: ()  async {
                     _submit();
                     //Navigator.of(context).pop();
                   },

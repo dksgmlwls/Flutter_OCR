@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 // import 'package:flutter/material.dart';
 // import 'package:camera/camera.dart';
 // import 'package:flutter_camera_overlay/model.dart';
@@ -10,21 +11,26 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../example/example_camera_overaly.dart';
 
+
 class UseCameraPage extends StatefulWidget {
   static const routeName = '/camera-page';
+  final String path;
+  // const UseCameraPage({Key? key}) : super(key: key);
 
-  const UseCameraPage({Key? key}) : super(key: key);
+  const UseCameraPage(this.path);
 
   @override
   _UseCameraPageState createState() => _UseCameraPageState();
 }
 
 class _UseCameraPageState extends State<UseCameraPage> {
+
   File? _image;
   final picker = ImagePicker();
 
   // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
   Future getImage(ImageSource imageSource) async {
+    print("getImageㅎㅎ");
     final image = await picker.pickImage(source: imageSource);
 
     setState(() {
@@ -40,7 +46,7 @@ class _UseCameraPageState extends State<UseCameraPage> {
         height: MediaQuery.of(context).size.width,
         child: Center(
             child: _image == null
-                ? Text('No image selected.')
+                ? (widget.path == "no" ? Text('No image selected.') : Image.file(File(widget.path)))
                 : Image.file(File(_image!.path))));
   }
 
@@ -69,9 +75,10 @@ class _UseCameraPageState extends State<UseCameraPage> {
                   heroTag: 'camera',
                   child: Icon(Icons.add_a_photo),
                   tooltip: 'pick Iamge',
-                  onPressed: () {
-                   // getImage(ImageSource.camera);
+                  onPressed: ()  {
+                    // getImage(ImageSource.camera);
                     Navigator.push(context, MaterialPageRoute(builder: (context) => ExampleCameraOverlay()));
+
                   },
                 ),
 

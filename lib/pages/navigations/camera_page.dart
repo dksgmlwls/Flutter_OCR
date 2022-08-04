@@ -1,16 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:ocr/pages/navigations/ExampleCameraOverlay.dart';
 import 'dart:io';
 // import 'package:flutter/material.dart';
 // import 'package:camera/camera.dart';
-// import 'package:flutter_camera_overlay/flutter_camera_overlay.dart';
 // import 'package:flutter_camera_overlay/model.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_camera_overlay/flutter_camera_overlay.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ocr/pages/navigations/ExampleCameraOverlay.dart';
+
+import '../../example/example_camera_overaly.dart';
 
 class UseCameraPage extends StatefulWidget {
   static const routeName = '/camera-page';
@@ -38,14 +36,8 @@ class _UseCameraPageState extends State<UseCameraPage> {
   Widget showImage() {
     return Container(
         color: const Color(0xffd0cece),
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
-        height: MediaQuery
-            .of(context)
-            .size
-            .width,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.width,
         child: Center(
             child: _image == null
                 ? Text('No image selected.')
@@ -67,29 +59,29 @@ class _UseCameraPageState extends State<UseCameraPage> {
             showImage(),
             SizedBox(
               height: 50.0,
+
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 // 카메라 촬영 버튼
                 FloatingActionButton(
-                  heroTag: "camera",
+                  heroTag: 'camera',
                   child: Icon(Icons.add_a_photo),
                   tooltip: 'pick Iamge',
                   onPressed: () {
-                    getImage(ImageSource.camera);
-                    // Navigator.push(context, MaterialPageRoute(
-                    //     builder: (context) => CameraOverlay()));
+                   // getImage(ImageSource.camera);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ExampleCameraOverlay()));
                   },
                 ),
 
                 // 갤러리에서 이미지를 가져오는 버튼
                 FloatingActionButton(
-                  heroTag: "send_result",
-                  child: Icon(Icons.check_outlined),
+                  heroTag: 'send_button',
+                  child: Icon(Icons.wallpaper),
                   tooltip: 'pick Iamge',
                   onPressed: () {
-                    //getImage(ImageSource.gallery);
+                    getImage(ImageSource.gallery);
                   },
                 ),
               ],

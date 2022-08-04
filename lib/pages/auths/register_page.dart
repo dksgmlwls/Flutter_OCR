@@ -17,7 +17,7 @@ class _SignUpPageState extends State<SignUpPage> {
   late String _name;
   late String _password;
   late String _email;
-  late String _id;
+  late String _phoneNumber;
 
   void _showErrorDialog(String message) {
     showDialog(
@@ -47,7 +47,7 @@ class _SignUpPageState extends State<SignUpPage> {
       formKey.currentState!.save();
       try {
         await Provider.of<AuthProvider>(context, listen: false)
-            .signUp(_name, _id, _email, _password);
+            .signUp(_email, _password,_name, _phoneNumber);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("가입이 완료되었습니다. 로그인을 진행해주세요."),
@@ -102,16 +102,16 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
                 SizedBox(height: 20),
-                TitleTextComponent("아이디"),
+                TitleTextComponent("휴대폰 번호"),
                 Container(
                   child: TextFormField(
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                      hintText: "아이디를 입력해주세요.",
+                      hintText: "(예시) 01012341234",
                     ),
                     onSaved: (value) {
-                      _id = value!;
+                      _phoneNumber = value!;
                     },
                     // validator: (value) {
                     //   if (value!.length < 10) {
@@ -153,7 +153,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 Container(
                   child: TextFormField(
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                       hintText: "비밀번호를 입력해주세요.",

@@ -104,6 +104,7 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
                                           alignment: FractionalOffset.center,
                                           image: FileImage(
                                             File(file.path),
+
                                           ),
                                         )),
                                   ),

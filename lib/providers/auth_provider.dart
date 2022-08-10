@@ -20,7 +20,7 @@ class AuthProvider with ChangeNotifier {
 
   // 1. 로그인
   Future<void> login(String? email, String? password) async {
-    final url = Uri.parse('https://211.107.210.141:3000/users/login');
+    final url = Uri.parse('http://211.107.210.141:3000/users/login');
     try {
       final response = await http.post(
         url,
@@ -28,13 +28,23 @@ class AuthProvider with ChangeNotifier {
           {'email': email, 'password': password},
         ),
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         final extractedDate = jsonDecode(response.body)['uid'].toString();
         await secureStorage.write(key: "auth", value: extractedDate);
         await secureStorage.write(key: "email", value: email);
         auth = extractedDate;
         notifyListeners();
-      } else {
+      } else if(response.statusCode == 301) {
+        print("로그인-301에러 // 모든 항목을 기입하지 않음");
+        throw Error;
+      } else if(response.statusCode == 302) {
+        print("로그인-302에러 // 가입되지 않은 이메일");
+        throw Error;
+      } else if(response.statusCode == 303) {
+        print("로그인-303에러 // 비밀번호 틀림");
+        throw Error;
+      } else if(response.statusCode == 401) {
+        print("로그인-401에러 // 쿼리 에러");
         throw Error;
       }
     } catch (error) {
@@ -51,8 +61,7 @@ class AuthProvider with ChangeNotifier {
 
   // 3. 회원가입
   Future<void> signUp(String email, String password, String name, String phoneNumber) async {
-    final url = Uri.parse('https://211.107.210.141:3000/users/signup');
-    print("object");
+    final url = Uri.parse('http://211.107.210.141:3000/users/signup');
     try {
       final response = await http.post(
         url,
@@ -61,13 +70,16 @@ class AuthProvider with ChangeNotifier {
 
         ),
       );
-      if (response.statusCode == 200) {
-        // final extractedDate = jsonDecode(response.body)['uid'].toString();
-        // await secureStorage.write(key: "auth", value: extractedDate);
-        // await secureStorage.write(key: "userEmail", value: email);
-        // auth = extractedDate;
+      if (response.statusCode == 201) {
         notifyListeners();
-      } else {
+      } else if(response.statusCode == 301) {
+        print("로그인-301에러 // 모든 항목을 기입하지 않음");
+        throw Error;
+      } else if(response.statusCode == 302) {
+        print("로그인-302에러 // 이메일 중복");
+        throw Error;
+      } else if(response.statusCode == 401) {
+        print("로그인-401에러 // 쿼리 에러");
         throw Error;
       }
     } catch (error) {
@@ -152,9 +164,10 @@ class AuthProvider with ChangeNotifier {
         url,
         body: {'img' : path},
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         notifyListeners();
-      } else {
+      } else if(response.statusCode == 301) {
+        print("이미지 업로드 실패 // 이미지가 없음");
         throw Error;
       }
     } catch (error) {

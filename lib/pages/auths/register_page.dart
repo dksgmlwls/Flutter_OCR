@@ -1,3 +1,5 @@
+//import 'dart:js_util/js_util_wasm.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart'; //쿠퍼티노 위젯
 import 'package:ocr/pages/auths/login_page.dart';
@@ -48,7 +50,7 @@ class _SignUpPageState extends State<SignUpPage> {
       formKey.currentState!.save();
       try {
         await Provider.of<AuthProvider>(context, listen: false)
-            .signUp(_email, _password,_name, _phoneNumber);
+            .signUp(_email, _password, _name, _phoneNumber);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("가입이 완료되었습니다. 로그인을 진행해주세요."),
@@ -57,7 +59,7 @@ class _SignUpPageState extends State<SignUpPage> {
         );
         Navigator.of(context).pop();
       } catch (error) {
-
+        print(error.toString());
         _showErrorDialog("이미 존재하는 계정입니다.");
       }
     }

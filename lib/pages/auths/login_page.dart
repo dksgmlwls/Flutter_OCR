@@ -1,9 +1,11 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart'; //쿠퍼티노 위젯
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ocr/findUserInfo_page.dart';
 import 'package:ocr/pages/home_page.dart';
-
 import 'package:ocr/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -18,10 +20,46 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  static final secureStorage = FlutterSecureStorage();
+  String? auth;
   final formKey = GlobalKey<FormState>();
   var _isLoading = false;
   late String? _email;
   late String? _password;
+
+  // // 1. 로그인
+  // Future<void> login(String? email, String? password) async {
+  //   final url = Uri.parse('https://211.107.210.141:3000/users/login');
+  //   try {
+  //     final response = await http.post(
+  //       url,
+  //       body: json.encode(
+  //         {'email': email, 'password': password},
+  //       ),
+  //     );
+  //     if (response.statusCode == 201) {
+  //       final extractedDate = jsonDecode(response.body)['uid'].toString();
+  //       await secureStorage.write(key: "auth", value: extractedDate);
+  //       await secureStorage.write(key: "email", value: email);
+  //       auth = extractedDate;
+  //       //notifyListeners();
+  //     } else if(response.statusCode == 301) {
+  //       print("로그인-301에러 // 모든 항목을 기입하지 않음");
+  //       throw Error;
+  //     } else if(response.statusCode == 302) {
+  //       print("로그인-302에러 // 가입되지 않은 이메일");
+  //       throw Error;
+  //     } else if(response.statusCode == 303) {
+  //       print("로그인-303에러 // 비밀번호 틀림");
+  //       throw Error;
+  //     } else if(response.statusCode == 401) {
+  //       print("로그인-401에러 // 쿼리 에러");
+  //       throw Error;
+  //     }
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
 
 
   void _showErrorDialog(String message) {

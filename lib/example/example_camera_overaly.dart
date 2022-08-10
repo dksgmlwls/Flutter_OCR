@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart'; //쿠퍼티노 위젯
 import 'package:camera/camera.dart';
 import 'package:flutter_camera_overlay/flutter_camera_overlay.dart';
 import 'package:flutter_camera_overlay/model.dart';
-import 'package:ocr/pages/navigations/camera_page.dart';
-// import '../pages/navigations/camera_page.dart';
 import '../pages/home_page.dart';
+import '../pages/api/upload_image.dart';
 import 'package:image_picker/image_picker.dart';
+
 main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
@@ -29,20 +30,9 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
   OverlayFormat format = OverlayFormat.cardID1;
   int tab = 0;
 
-  File? _image;
-  final picker = ImagePicker();
-
-  // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
-  Future getImage(ImageSource imageSource) async {
-    print("getImage");
-    final image = await picker.pickImage(source: imageSource);
-
-    setState(() {
-      _image = File(image!.path); // 가져온 이미지를 _image에 저장
-    });
-  }
   @override
   Widget build(BuildContext context) {
+    String urlpath;
     return MaterialApp(
         home: Scaffold(
           // bottomNavigationBar: BottomNavigationBar(
@@ -109,18 +99,16 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
                             actions: [
                               OutlinedButton(
                                 // onPressed: () => Navigator.of(context).pop(),
-                                  onPressed: (){
-
-                                    // Navigator.pop(context, file.path);
+                                  onPressed: () async {
+                                    final filename = await submit_uploadimg(file);
+                                    print(filename);
 
                                     Navigator.of(context).popUntil((route) => route.isFirst);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) =>
-                                          HomePage(file.path)),
+                                    await Navigator.push(context,MaterialPageRoute(builder: (context) =>
+                                        HomePage(filename)),
                                     );
                                   },
-                                  child: const Icon(Icons.close))
+                                  child: const Icon(Icons.send))
                             ],
                             content: SizedBox(
                                 width: double.infinity,
@@ -158,3 +146,4 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
         ));
   }
 }
+

@@ -4,6 +4,7 @@
 // import 'package:camera/camera.dart';
 // import 'package:flutter_camera_overlay/flutter_camera_overlay.dart';
 // import 'package:flutter_camera_overlay/model.dart';
+// import 'package:image_picker/image_picker.dart';
 //
 // main() {
 //   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,18 @@
 // class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
 //   OverlayFormat format = OverlayFormat.cardID1;
 //   int tab = 0;
+//
+//   // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
+//   File? _image;
+//   final picker = ImagePicker();
+//   Future getImage(ImageSource imageSource) async {
+//     print("getImageㅎㅎ");
+//     final image = await picker.pickImage(source: imageSource);
+//
+//     setState(() {
+//       _image = File(image!.path); // 가져온 이미지를 _image에 저장
+//     });
+//   }
 //
 //   @override
 //   Widget build(BuildContext context) {
@@ -77,10 +90,46 @@
 //                 return CameraOverlay(
 //                     snapshot.data!.first,
 //                     CardOverlay.byFormat(format),
-//                         (XFile file) => print(file.path),
-//                     info: 'Please take a picture into the frame',
-//                     label: '가이드라인에 맞춰 사진을 찍어주세요');
+//                         (XFile file) => showDialog(
+//                       context: context,
+//                       barrierColor: Colors.black,
+//                       builder: (context) {
+//                         CardOverlay overlay = CardOverlay.byFormat(format);
+//                         return AlertDialog(
+//                             actionsAlignment: MainAxisAlignment.center,
+//                             backgroundColor: Colors.black,
+//                             title: const Text('Capture',
+//                                 style: TextStyle(color: Colors.white),
+//                                 textAlign: TextAlign.center),
+//                             actions: [
+//                               OutlinedButton(
+//                                 // onPressed: (){
+//                                 //   getImage(ImageSource.camera);
+//                                 // },
+//                                   onPressed: () => Navigator.of(context).pop(),
+//                                   child: const Icon(Icons.close))
+//                             ],
+//                             content: SizedBox(
+//                                 width: double.infinity,
+//                                 child: AspectRatio(
+//                                   aspectRatio: overlay.ratio!,
+//                                   child: Container(
+//                                     decoration: BoxDecoration(
+//                                         image: DecorationImage(
+//                                           fit: BoxFit.fitWidth,
+//                                           alignment: FractionalOffset.center,
+//                                           image: FileImage(
+//                                             File(file.path),
 //
+//                                           ),
+//                                         )),
+//                                   ),
+//                                 )));
+//                       },
+//                     ),
+//                     info:
+//                     '틀에 맞춰 촬영을 해주세요.',
+//                     label: 'OCR');
 //               } else {
 //                 return const Align(
 //                     alignment: Alignment.center,

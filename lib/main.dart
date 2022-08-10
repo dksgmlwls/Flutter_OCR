@@ -76,17 +76,6 @@ class FormScreenState extends State<FormScreen> {
                     child: Text('회원가입'),
                   ),
 
-                  ElevatedButton(
-                    onPressed: () {
-
-                      Navigator.push( // SecondPage로 화면 이동 코드.
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage("no")),
-                      );
-                    },
-                    child: Text('메인화면'),
-                  ),
-
                 ],
               )),
         ],

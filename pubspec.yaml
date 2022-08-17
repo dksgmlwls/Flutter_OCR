@@ -35,6 +35,8 @@ dependencies:
   #shared_preferences: ^0.5.12
   provider: ^4.1.2
   image_picker: ^0.8.4+4
+  image_cropper: ^1.4.1
+  flutter_native_image: ^0.0.6
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -44,7 +46,8 @@ dependencies:
   google_fonts: ^2.3.0 #to import google fonts and text theme
   flutter_secure_storage: ^3.3.5
   fluttertoast: ^7.1.6
-  checkbox_formfield: ^0.1.0+3
+  #checkbox_formfield: ^0.1.0+3
+  checkbox_formfield: ^0.2.0
   camera: ^0.9.4
   camera_web: ^0.2.1+1
   #camera: ^0.10.0
@@ -54,6 +57,7 @@ dependencies:
   dio: ^4.0.0
   http: ^0.13.4
   editable: ^1.1.2
+  syncfusion_flutter_datagrid: ^20.2.43
 
 
 

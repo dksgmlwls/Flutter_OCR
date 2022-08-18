@@ -147,72 +147,6 @@ class _UseCameraPageState extends State<UseCameraPage> {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-    // return Scaffold(
-    //   body: Column(
-    //     children: [
-    //       TextField(
-    //         controller: xController,
-    //         decoration: const InputDecoration(hintText: "x"),
-    //       ),
-    //       TextField(
-    //         controller: pxController,
-    //         decoration: const InputDecoration(hintText: "px"),
-    //       ),
-    //       ElevatedButton(
-    //           onPressed: () {
-    //             // get Text and parse to double
-    //             final xVal = xController.text.toString();
-    //             final pxVal = pxController.text.toString();
-    //
-    //             double? x = double.tryParse(xVal);
-    //             double? px = double.tryParse(pxVal);
-    //
-    //             if (x == null || px == null) {
-    //               /// allow only number
-    //               return;
-    //             }
-    //             // else add to data list
-    //             setState(() {
-    //               data.add(F(x: x, px: px));
-    //             });
-    //
-    //             /// clear
-    //             xController.clear();
-    //             pxController.clear();
-    //           },
-    //           child: Text("ADD")),
-    //       DataTable(
-    //           headingRowColor:
-    //           MaterialStateProperty.all(Colors.blueGrey.withOpacity(.5)),
-    //           showBottomBorder: true,
-    //           columns: const [
-    //             DataColumn(
-    //               label: Text("x"),
-    //             ),
-    //             DataColumn(
-    //               label: Text("p(x)"),
-    //             ),
-    //             DataColumn(
-    //               label: Text("x*p(x)"),
-    //             ),
-    //           ],
-    //           rows: data
-    //               .map(
-    //                 (f) => DataRow(
-    //               cells: [
-    //                 DataCell(Text(f.x.toString())),
-    //                 DataCell(Text(f.px.toString())),
-    //                 DataCell(Text(
-    //                   f.multiply.toStringAsFixed(3),
-    //                 )),
-    //               ],
-    //             ),
-    //           )
-    //               .toList()),
-    //     ],
-    //
-    //   ),
-    // );
     return SingleChildScrollView(
       // backgroundColor: const Color(0xfff4f3f9),
       scrollDirection: Axis.vertical,
@@ -221,34 +155,6 @@ class _UseCameraPageState extends State<UseCameraPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(height: 30.0),
-          // DataTable(
-          //     headingRowColor:
-          //     MaterialStateProperty.all(Colors.white.withOpacity(.5)),
-          //     showBottomBorder: true,
-          //     columns: const [
-          //       DataColumn(
-          //         label: Text("x"),
-          //       ),
-          //       DataColumn(
-          //         label: Text("p(x)"),
-          //       ),
-          //       DataColumn(
-          //         label: Text("x*p(x)"),
-          //       ),
-          //     ],
-          //     rows: data
-          //         .map(
-          //           (f) => DataRow(
-          //         cells: [
-          //           DataCell(Text(f.x.toString())),
-          //           DataCell(Text(f.px.toString())),
-          //           DataCell(Text(
-          //             f.multiply.toStringAsFixed(3),
-          //           )),
-          //         ],
-          //       ),
-          //     )
-          //         .toList()),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -268,7 +174,6 @@ class _UseCameraPageState extends State<UseCameraPage> {
                   children: [
                     TableRow(children: [
                       Column(children: [Text('모돈번호',
-
                           style: TextStyle(fontSize: 20.0))
                       ]),
                       Column(children: [
@@ -451,7 +356,7 @@ class _UseCameraPageState extends State<UseCameraPage> {
             children: <Widget>[
               Container(
                 child: Table(
-                  defaultColumnWidth: FixedColumnWidth(45.8),
+                  defaultColumnWidth: FixedColumnWidth(53.3),
                   border: TableBorder.all(
                     color: Colors.black,
                     style: BorderStyle.solid,
@@ -481,7 +386,7 @@ class _UseCameraPageState extends State<UseCameraPage> {
             children: <Widget>[
               Container(
                 child: Table(
-                  defaultColumnWidth: FixedColumnWidth(45.8),
+                  defaultColumnWidth: FixedColumnWidth(45.7),
                   border: TableBorder.all(
                       color: Colors.black,
                       style: BorderStyle.solid,
@@ -513,7 +418,7 @@ class _UseCameraPageState extends State<UseCameraPage> {
             children: <Widget>[
               Container(
                 child: Table(
-                  defaultColumnWidth: FixedColumnWidth(45.8),
+                  defaultColumnWidth: FixedColumnWidth(80),
                   border: TableBorder.all(
                       color: Colors.black,
                       style: BorderStyle.solid,
@@ -539,7 +444,7 @@ class _UseCameraPageState extends State<UseCameraPage> {
             children: <Widget>[
               Container(
                 child: Table(
-                  defaultColumnWidth: FixedColumnWidth(45.8),
+                  defaultColumnWidth: FixedColumnWidth(32),
                   border: TableBorder.all(
                       color: Colors.black,
                       style: BorderStyle.solid,
@@ -577,7 +482,7 @@ class _UseCameraPageState extends State<UseCameraPage> {
             children: <Widget>[
               Container(
                 child: Table(
-                  defaultColumnWidth: FixedColumnWidth(45.8),
+                  defaultColumnWidth: FixedColumnWidth(160),
                   border: TableBorder.all(
                       color: Colors.black,
                       style: BorderStyle.solid,
@@ -594,8 +499,6 @@ class _UseCameraPageState extends State<UseCameraPage> {
               )
             ],
           ),
-
-
 
           SizedBox(height: 10.0), // 위에 여백
           showImage(),

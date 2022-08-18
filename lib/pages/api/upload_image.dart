@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart'; //쿠퍼티노 위젯
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import '../home_page.dart';
+
 submit_uploadimg(dynamic file) async {
   String filename = "no";
   try {
@@ -30,6 +31,7 @@ submit_uploadimg(dynamic file) async {
     return filename;
   }
 }
+
 uploadimg(String imagePath) async {
   Dio dio = new Dio();
   try {
@@ -56,5 +58,4 @@ uploadimg(String imagePath) async {
     dio.close();
   }
   // return 0;
-
 }

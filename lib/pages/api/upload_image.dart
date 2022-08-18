@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import '../home_page.dart';
 
+late final List<dynamic> array;
 submit_uploadimg(dynamic file) async {
   String filename = "no";
   try {
@@ -15,7 +16,9 @@ submit_uploadimg(dynamic file) async {
       case 200:
         final jsonbody = res.data;       // ex) {"result":[335,"1111-11-11","2022_08_10_14_57_16.jpg"]}
         filename = jsonbody['result'][2]; // ex) "2022_08_10_14_57_16.jpg"
-        Image.network('http://211.107.210.141:3000/'+filename);
+        array = jsonbody['result'];
+        print("array is ?");
+        print(array);
         break;
       case 201:
         break;
@@ -24,14 +27,16 @@ submit_uploadimg(dynamic file) async {
       default:
         break;
     }
-
     return filename;
   } catch (error) {
     print("error");
     return filename;
   }
 }
-
+receiveresult(){
+  print(array);
+  return array;
+}
 uploadimg(String imagePath) async {
   Dio dio = new Dio();
   try {

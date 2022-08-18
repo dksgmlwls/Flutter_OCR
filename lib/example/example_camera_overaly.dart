@@ -189,6 +189,7 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
                                   child: Container(
                                       alignment: Alignment.topRight,
                                       child: const Icon(Icons.send)
+
                                   ),
                                 ),
                               ],

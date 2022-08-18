@@ -27,34 +27,10 @@ class _GraphPageState extends State<GraphPage> {
   //const GraphPage({Key? key, required this.title}) : super(key: key);
   //final String title;
   late final DateTime _selectedDate;
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('현황 보기'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            RaisedButton(
-                child: Text('Run'),
-                color: Colors.blue,
-                textColor: Colors.white,
-                onPressed: (){
-                  Future<DateTime> future = showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2022),
-                      lastDate: DateTime(2050),
-                      builder: (BuildContext context, Widget child){
+    return Material(
 
-                  }
-                }
-          ],
-        ),
-      ),
 
 
     );

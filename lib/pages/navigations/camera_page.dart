@@ -44,8 +44,10 @@ class _UseCameraPageState extends State<UseCameraPage> {
   File? _image;
   final picker = ImagePicker();
   late String modon ='';
-  late String woongdon ='';
+  late String sowID ='';
+  late String boarID ='';
   late String lastresult ='';
+  late String title = '';
 
   String galleryurl = '';
   late List<dynamic> array;
@@ -116,8 +118,12 @@ class _UseCameraPageState extends State<UseCameraPage> {
     if(widget.path != "no"){
       array = receiveresult();
       print(array);
+      String title;
+      sowID = array[0];
       modon = array[0];
-      woongdon = array[1];
+      boarID = array[1];
+    }else{
+      array = [];
     };
 
     return SingleChildScrollView(
@@ -150,15 +156,16 @@ class _UseCameraPageState extends State<UseCameraPage> {
                           style: TextStyle(fontSize: 20.0))
                       ]),
                       Column(children: [
-                        TextField(controller: TextEditingController(),
-                          decoration:  InputDecoration(hintText: modon ),)
+                        TextField(controller: modonnum_Controller,
+                          decoration:  InputDecoration(hintText: sowID),)
+
                       ]),
                       Column(children: [Text('웅돈번호',
                           style: TextStyle(fontSize: 20.0))
                       ]),
                       Column(children: [
                         TextField(controller: TextEditingController(),
-                          decoration:  InputDecoration(hintText: woongdon),)
+                          decoration:  InputDecoration(hintText: boarID),)
                       ]),
                     ]),
                   ],
@@ -548,8 +555,11 @@ class _UseCameraPageState extends State<UseCameraPage> {
                   child: Icon(Icons.arrow_circle_right_sharp),
                   tooltip: 'pick Iamge',
                   onPressed: () async{
-                    lastresult = modon + "," + woongdon ;
-                    sendData(lastresult);
+                    lastresult = modonnum_Controller.text + "," + boarID ;
+                    sowID = '';
+                    print(modonnum_Controller.text);
+                    print(modon);
+                    sendData(modon, lastresult);
                     // getImage(ImageSource.gallery);
                   },
                 ),
@@ -562,13 +572,14 @@ class _UseCameraPageState extends State<UseCameraPage> {
   }
 }
 
-sendData(String? lastresult) async {
+sendData(String? modon, String? lastresult) async {
   Dio dio = new Dio();
   try {
 
     Response response = await dio.post(
         'http://211.107.210.141:3000/ocrs/uploadocr',
         data: {
+          'modon' : modon,
           'lastresult' : lastresult
         }
     );

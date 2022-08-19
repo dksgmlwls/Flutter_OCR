@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             label: '그래프',
-            icon: Icon(Icons.auto_graph_rounded),
+            icon: Icon(Icons.bar_chart_rounded),
           ),
           BottomNavigationBarItem(
             label: '기록',

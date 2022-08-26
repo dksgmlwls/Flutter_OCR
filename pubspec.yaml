@@ -60,6 +60,7 @@ dependencies:
   syncfusion_flutter_datagrid: ^20.2.43
   #table_calendar: ^3.0.2
   intl: ^0.16.0
+  fl_chart: ^0.10.0
 
 
 

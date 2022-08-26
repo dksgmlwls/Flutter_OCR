@@ -1,14 +1,8 @@
 import 'dart:ffi';
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-// import 'package:flutter/material.dart';
-// import 'package:camera/camera.dart';
-// import 'package:flutter_camera_overlay/model.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -50,6 +44,7 @@ class _UseCameraPageState extends State<UseCameraPage> {
   late String title = '';
 
   String galleryurl = '';
+
   late List<dynamic> array;
 
   //late final String pig_num = "ㄴㅁㅇㅁㄹ";
@@ -118,6 +113,7 @@ class _UseCameraPageState extends State<UseCameraPage> {
     if(widget.path != "no"){
       array = receiveresult();
       print(array);
+      print(array.length);
       String title;
       sowID = array[0];
       modon = array[0];

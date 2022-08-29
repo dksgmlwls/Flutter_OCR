@@ -60,8 +60,9 @@ dependencies:
   syncfusion_flutter_datagrid: ^20.2.43
   #table_calendar: ^3.0.2
   intl: ^0.16.0
+  simple_gesture_detector: ^0.2.0
   fl_chart: ^0.10.0
-  table_calendar: ^2.3.3
+  #table_calendar: ^2.3.3
 
 
 

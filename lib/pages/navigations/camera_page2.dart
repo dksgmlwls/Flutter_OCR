@@ -13,15 +13,15 @@ import '../../example/example_camera_overaly.dart';
 import '../api/upload_image.dart';
 
 
-class UseCameraPage extends StatefulWidget {
+class UseCameraPage2 extends StatefulWidget {
   static const routeName = '/camera-page';
   final String path;
   // const UseCameraPage({Key? key}) : super(key: key);
 
-  const UseCameraPage(this.path);
+  const UseCameraPage2(this.path);
 
   @override
-  _UseCameraPageState createState() => _UseCameraPageState();
+  _UseCameraPageState2 createState() => _UseCameraPageState2();
 }
 
 class F {
@@ -34,7 +34,7 @@ class F {
   }) : multiply = x * px;
 }
 
-class _UseCameraPageState extends State<UseCameraPage> {
+class _UseCameraPageState2 extends State<UseCameraPage2> {
   File? _image;
   final picker = ImagePicker();
   late String modon ='';
@@ -45,8 +45,7 @@ class _UseCameraPageState extends State<UseCameraPage> {
 
   String galleryurl = '';
 
-  //final List<dynamic> array = [];
-  List<dynamic> array = [];
+  // final List<dynamic> array = [];
 
   //late final String pig_num = "ㄴㅁㅇㅁㄹ";
   //late final String birth_year, birth_month, birth_day, buy_year, buy_month, buy_day, rutting_year, rutting_month, rutting_day, et_ruting_date, delivery_date,
@@ -111,9 +110,8 @@ class _UseCameraPageState extends State<UseCameraPage> {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-
     if(widget.path != "no"){
-      //array = receiveresult();
+      // array = receiveresult();
       array=['1','2','3'];
       print(array);
       print(array.length);
@@ -356,9 +354,9 @@ class _UseCameraPageState extends State<UseCameraPage> {
                 child: Table(
                   defaultColumnWidth: FixedColumnWidth(35.5),
                   border: TableBorder.all(
-                    color: Colors.black,
-                    style: BorderStyle.solid,
-                    width: 1.3),
+                      color: Colors.black,
+                      style: BorderStyle.solid,
+                      width: 1.3),
                   children: [
                     TableRow(children: [
                       Column(children: [Text('총산자수')

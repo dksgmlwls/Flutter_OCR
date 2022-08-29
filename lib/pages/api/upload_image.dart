@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import '../home_page.dart';
 
-late List<dynamic> array;
+late List<dynamic> array = ['','',''];
 submit_uploadimg(dynamic file) async {
   String filename = "no";
   try {

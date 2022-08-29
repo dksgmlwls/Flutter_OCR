@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'navigations/ExampleCameraOverlay.dart';
+import 'package:ocr/pages/navigations/camera_page2.dart';
 import 'navigations/main_page.dart';
 import 'navigations/camera_page.dart';
 import 'navigations/graph_page.dart';
 import 'navigations/memories_page.dart';
-import 'navigations/my_page.dart';
-
 
 class HomePage extends StatefulWidget {
   // const HomePage({Key? key}) : super(key: key);
@@ -21,9 +19,9 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> _screen = [
     UseCameraPage("no"),
+    UseCameraPage2("no"),
     GraphPage(),
     MemoryPage(),
-    MyPage()
   ];
 
 
@@ -33,9 +31,9 @@ class _HomePageState extends State<HomePage> {
 
     List<Widget> _screen = [
       UseCameraPage(widget.path==null? "no" : widget.path),
+      UseCameraPage2(widget.path==null? "no" : widget.path),
       GraphPage(),
       MemoryPage(),
-      MyPage()
     ];
 
     return Scaffold(
@@ -48,8 +46,12 @@ class _HomePageState extends State<HomePage> {
         currentIndex: _selectedIndex,
         items: [
           BottomNavigationBarItem(
-            label: '카메라',
+            label: '임신사',
             icon: Icon(Icons.aspect_ratio_outlined ),
+          ),
+          BottomNavigationBarItem(
+            label: '분만사',
+            icon: Icon(Icons.aspect_ratio_rounded),
           ),
           BottomNavigationBarItem(
             label: '그래프',
@@ -58,10 +60,6 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             label: '기록',
             icon: Icon(Icons.chat),
-          ),
-          BottomNavigationBarItem(
-            label: '내 정보',
-            icon: Icon(Icons.assignment_ind_outlined),
           ),
         ],
         onTap: (int index) {

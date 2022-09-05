@@ -25,9 +25,10 @@ class _GraphPageState extends State<GraphPage> {
 
   //late List<Double> array;
 
-  
+
   String dropdownValue = '총산자수';
-  
+  String title = '';
+
   List<String> spinnerItems = [
     "총산자수",
     "포유개시두수",
@@ -83,8 +84,8 @@ class _GraphPageState extends State<GraphPage> {
 
 
     //그래프 데이터 값 받아오기
-    //array = receiveresult();
-    array = ['1','2','3'];
+    array = receiveresult();
+    //array = ['1','2','3'];
 
     first = array[0];
 
@@ -118,48 +119,49 @@ class _GraphPageState extends State<GraphPage> {
               ],
             ),
             Row(
-              children: [
-                DropdownButton(
-                    value: dropdownValue,
-                    items: spinnerItems.map((value){
-                      return DropdownMenuItem(
+                children: [
+                  DropdownButton(
+                      value: dropdownValue,
+                      items: spinnerItems.map((value){
+                        return DropdownMenuItem(
                           value: value,
                           child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (value){
-                      setState(() {
-                        dropdownValue = value.toString();
-                      });
-                    })
-              ]),
+                        );
+                      }).toList(),
+                      onChanged: (value){
+                        setState(() {
+                          dropdownValue = value.toString();
+                          title = value.toString();
+                        });
+                      })
+                ]),
             Row(
               children: [
                 RaisedButton(
-                  child: Text('그래프보기'),
-                  onPressed: () => sendGraph(startDate.toString(), stopDate.toString(), dropdownValue.toString()),
-                  color: Colors.grey,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 20)
+                    child: Text('그래프보기'),
+                    onPressed: () => sendGraph(startDate.toString(), stopDate.toString(), dropdownValue.toString()),
+                    color: Colors.grey,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 20)
                 ),
               ],
             ),
             Column(
               children: [
                 AspectRatio(aspectRatio: 3/2,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10),
+                        ),
+                        color: Color(0xff232d37)),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+                      child: LineChart(
+                        showAvg ? avgChart() : mainChart(),
+                      ),
                     ),
-                    color: Color(0xff232d37)),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-                    child: LineChart(
-                      showAvg ? avgChart() : mainChart(),
-                    ),
-                  ),
-                ),)
+                  ),)
               ],
             ),
           ],
@@ -416,4 +418,3 @@ LineChartData avgChart() {
     ],
   );
 }
-

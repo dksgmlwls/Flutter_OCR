@@ -61,6 +61,8 @@ dependencies:
   #table_calendar: ^3.0.2
   intl: ^0.16.0
   simple_gesture_detector: ^0.2.0
+  #syncfusion_flutter_charts: ^18.3.42
+  #how2geeks_flutter_charts: ^17.3.26
   fl_chart: ^0.10.0
   #table_calendar: ^2.3.3
 

@@ -37,15 +37,47 @@ class F {
 class _UseCameraPageState2 extends State<UseCameraPage2> {
   File? _image;
   final picker = ImagePicker();
-  late String modon ='';
+
   late String sowID ='';
-  late String boarID ='';
+
+  late String birth_year ='';
+  late String birth_month ='';
+  late String birth_day ='';
+
+  late String adoption_year ='';
+  late String adoption_month ='';
+  late String adoption_day ='';
+
+  late String expect_month ='';
+  late String expect_day ='';
+
+  late String givebirth_month ='';
+  late String givebirth_day ='';
+
+  late String totalbaby ='';
+  late String feedbaby ='';
+  late String weight ='';
+
+  late String teen_month ='';
+  late String teen_day ='';
+
+  late String totalteen ='';
+  late String teenweight ='';
+
+  late String vaccine1 ='';
+  late String vaccine2 ='';
+  late String vaccine3 ='';
+  late String vaccine4 ='';
+
+  late String memo = '';
+
   late String lastresult ='';
   late String title = '';
 
   String galleryurl = '';
 
   // final List<dynamic> array = [];
+  List<dynamic> array = [];
 
   //late final String pig_num = "ㄴㅁㅇㅁㄹ";
   //late final String birth_year, birth_month, birth_day, buy_year, buy_month, buy_day, rutting_year, rutting_month, rutting_day, et_ruting_date, delivery_date,
@@ -73,7 +105,37 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
     // if(widget.path != "no"){
     //   array = receiveresult();
     //   print(array);
-    //   modon = array[0];
+    //   sowID = array[0];
+    //   birth_year = array[1];
+    //   birth_month = array[2];
+    //   birth_day = array[3];
+    //   //adoption_year array[4];
+    //   // late String adoption_month ='';
+    //   // late String adoption_day ='';
+    //   //
+    //   // late String expect_month ='';
+    //   // late String expect_day ='';
+    //   //
+    //   // late String givebirth_month ='';
+    //   // late String givebirth_day ='';
+    //   //
+    //   // late String totalbaby ='';
+    //   // late String feedbaby ='';
+    //   // late String weight ='';
+    //   //
+    //   // late String teen_month ='';
+    //   // late String teen_day ='';
+    //   //
+    //   // late String totalteen ='';
+    //   // late String teenweight ='';
+    //   //
+    //   // late String vaccine1 ='';
+    //   // late String vaccine2 ='';
+    //   // late String vaccine3 ='';
+    //   // late String vaccine4 ='';
+    //   //
+    //   // late String memo = '';
+    //
     // };
 
 
@@ -97,8 +159,31 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
 
   List<F> data = [];
 
-  final modonnum_Controller = TextEditingController();
-  final pxController = TextEditingController();
+  final sowID_Controller = TextEditingController();
+  final birth_year_Controller = TextEditingController();
+  final birth_month_Controller = TextEditingController();
+  final birth_day_Controller = TextEditingController();
+  final adoption_year_Controller = TextEditingController();
+  final adoption_month_Controller = TextEditingController();
+  final adoption_day_Controller = TextEditingController();
+  final expect_month_Controller = TextEditingController();
+  final expect_day_Controller = TextEditingController();
+  final givebirth_month_Controller = TextEditingController();
+  final givebirth_day_Controller = TextEditingController();
+  final totalbaby_Controller = TextEditingController();
+  final feedbaby_Controller = TextEditingController();
+  final weight_Controller = TextEditingController();
+  final teen_month_Controller = TextEditingController();
+  final teen_day_Controller = TextEditingController();
+  final totalteen_Controller = TextEditingController();
+  final teenweight_Controller = TextEditingController();
+
+
+  final vaccine1_Controller = TextEditingController();
+  final vaccine2_Controller = TextEditingController();
+  final vaccine3_Controller = TextEditingController();
+  final vaccine4_Controller = TextEditingController();
+  final memo_Controller = TextEditingController();
 
 
   @override
@@ -111,14 +196,44 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
     if(widget.path != "no"){
-      // array = receiveresult();
-      array=['1','2','3'];
+      array = receiveresult();
+      //array=['1','2','3'];
       print(array);
       print(array.length);
       String title;
       sowID = array[0];
-      modon = array[0];
-      boarID = array[1];
+      birth_year = array[1];
+      birth_month = array[2];
+      birth_day = array[3];
+
+      adoption_year = array[4];
+      adoption_month = array[5];
+      adoption_day = array[6];
+
+      expect_month = array[7];
+      expect_day = array[8];
+
+      givebirth_month = array[9];
+      givebirth_day = array[10];
+
+      totalbaby = array[11];
+      feedbaby = array[12];
+      weight = array[13];
+
+      teen_month = array[14];
+      teen_day = array[15];
+
+      totalteen = array[16];
+      teenweight = array[17];
+
+      vaccine1 = array[18];
+      vaccine2 = array[19];
+      vaccine3 = array[20];
+      vaccine4 = array[21];
+
+      memo = array[22];
+
+
     }else{
       array = [];
     };
@@ -136,7 +251,7 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
             children: <Widget>[
               Container(
                 child: Table(
-                  defaultColumnWidth: FixedColumnWidth(80.0),
+                  defaultColumnWidth: FixedColumnWidth(160.0),
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle, // 표 가운데 정렬
                   border: TableBorder(
                     // color: Colors.white,
@@ -152,23 +267,13 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                       Column(children: [Text('모돈번호',
                           style: TextStyle(fontSize: 20.0))
                       ]),
-                      Column(children: [
-                        TextField(controller: modonnum_Controller,
-                          decoration:  InputDecoration(hintText: sowID),)
-
-                      ]),
-                      Column(children: [Text('웅돈번호',
-                          style: TextStyle(fontSize: 20.0))
-                      ]),
-                      Column(children: [
-                        TextField(controller: TextEditingController(),
-                          decoration:  InputDecoration(hintText: boarID),)
+                      Column(children: [TextField(controller: sowID_Controller,
+                        decoration: const InputDecoration(hintText: " "),)
                       ]),
                     ]),
                   ],
                 ),
               ),
-
             ],
 
           ),
@@ -178,7 +283,7 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
             children: <Widget>[
               Container(
                 child: Table(
-                  defaultColumnWidth: FixedColumnWidth(45.8),
+                  defaultColumnWidth: FixedColumnWidth(45.7142857),
                   border: TableBorder.all(
                       color: Colors.black,
                       style: BorderStyle.solid,
@@ -187,17 +292,17 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                     TableRow(children: [
                       Column(children: [Text('출생일')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: birth_year_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
                       Column(children: [Text('년')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: birth_month_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
                       Column(children: [Text('월')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: birth_day_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
                       Column(children: [Text('일')
@@ -207,113 +312,48 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                     TableRow(children: [
                       Column(children: [Text('구입일')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: adoption_year_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
                       Column(children: [Text('년')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: adoption_month_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
                       Column(children: [Text('월')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: adoption_day_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
                       Column(children: [Text('일')
                       ]),
                     ],
                     ),
-                    TableRow(children: [
-                      Column(children: [Text('초발정일')
-                      ]),
-                      Column(children: [TextField(controller: TextEditingController(),
-                        decoration: const InputDecoration(hintText: " "),)
-                      ]),
-                      Column(children: [Text('년')
-                      ]),
-                      Column(children: [TextField(controller: TextEditingController(),
-                        decoration: const InputDecoration(hintText: " "),)
-                      ]),
-                      Column(children: [Text('월')
-                      ]),
-                      Column(children: [TextField(controller: TextEditingController(),
-                        decoration: const InputDecoration(hintText: " "),)
-                      ]),
-                      Column(children: [Text('일')
-                      ]),
-                    ],
-                    ),
-                    TableRow(children: [
-                      Column(children: [Text('1차교배일')
-                      ]),
-                      Column(children: [Text('******')
-                      ]),
-                      Column(children: [Text('년')
-                      ]),
-                      Column(children: [TextField(controller: TextEditingController(),
-                        decoration: const InputDecoration(hintText: " "),)
-                      ]),
-                      Column(children: [Text('월')
-                      ]),
-                      Column(children: [TextField(controller: TextEditingController(),
-                        decoration: const InputDecoration(hintText: " "),)
-                      ]),
-                      Column(children: [Text('일')
-                      ]),
-                    ],
-                    ),
-                    TableRow(children: [
-                      Column(children: [Text('2차교배일')
-                      ]),
-                      Column(children: [Text('******')
-                      ]),
-                      Column(children: [Text('년')
-                      ]),
-                      Column(children: [TextField(controller: TextEditingController(),
-                        decoration: const InputDecoration(hintText: " "),)
-                      ]),
-                      Column(children: [Text('월')
-                      ]),
-                      Column(children: [TextField(controller: TextEditingController(),
-                        decoration: const InputDecoration(hintText: " "),)
-                      ]),
-                      Column(children: [Text('일')
-                      ]),
-                    ],
-                    ),
-                    TableRow(children: [
-                      Column(children: [Text('재발확인일')
-                      ]),
-                      Column(children: [Text('******')
-                      ]),
-                      Column(children: [Text('년')
-                      ]),
-                      Column(children: [TextField(controller: TextEditingController(),
-                        decoration: const InputDecoration(hintText: " "),)
-                      ]),
-                      Column(children: [Text('월')
-                      ]),
-                      Column(children: [TextField(controller: TextEditingController(),
-                        decoration: const InputDecoration(hintText: " "),)
-                      ]),
-                      Column(children: [Text('일')
-                      ]),
-                    ],
-                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Container(
+                child: Table(
+                  defaultColumnWidth: FixedColumnWidth(64),
+                  border: TableBorder.all(
+                      color: Colors.black,
+                      style: BorderStyle.solid,
+                      width: 1.3),
+                  children: [
                     TableRow(children: [
                       Column(children: [Text('분만예정일')
                       ]),
-                      Column(children: [Text('******')
-                      ]),
-                      Column(children: [Text('년')
-                      ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: expect_month_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
                       Column(children: [Text('월')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: expect_day_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
                       Column(children: [Text('일')
@@ -323,16 +363,12 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                     TableRow(children: [
                       Column(children: [Text('분만일')
                       ]),
-                      Column(children: [Text('******')
-                      ]),
-                      Column(children: [Text('년')
-                      ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: givebirth_month_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
                       Column(children: [Text('월')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: givebirth_day_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
                       Column(children: [Text('일')
@@ -340,19 +376,16 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                     ],
                     ),
                   ],
-
                 ),
-              ),
-
+              )
             ],
-
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Container(
                 child: Table(
-                  defaultColumnWidth: FixedColumnWidth(35.5),
+                  defaultColumnWidth: FixedColumnWidth(53.333334),
                   border: TableBorder.all(
                       color: Colors.black,
                       style: BorderStyle.solid,
@@ -361,26 +394,21 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                     TableRow(children: [
                       Column(children: [Text('총산자수')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: totalbaby_Controller,
                         decoration: const InputDecoration(hintText: " "),)
-                      ]),
-                      Column(children: [Text('마리')
                       ]),
                       Column(children: [Text('포유개시두수')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: feedbaby_Controller,
                         decoration: const InputDecoration(hintText: " "),)
-                      ]),
-                      Column(children: [Text('마리')
                       ]),
                       Column(children: [Text('생시체중')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: weight_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
-                      Column(children: [Text('kg')
-                      ]),
-                    ])
+                    ],
+                    ),
                   ],
                 ),
               )
@@ -391,7 +419,7 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
             children: <Widget>[
               Container(
                 child: Table(
-                  defaultColumnWidth: FixedColumnWidth(45.7),
+                  defaultColumnWidth: FixedColumnWidth(64),
                   border: TableBorder.all(
                       color: Colors.black,
                       style: BorderStyle.solid,
@@ -400,21 +428,18 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                     TableRow(children: [
                       Column(children: [Text('이유일')
                       ]),
-                      Column(children: [Text('******')
-                      ]),
-                      Column(children: [Text('년')
-                      ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: teen_month_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
                       Column(children: [Text('월')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: teen_day_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
                       Column(children: [Text('일')
                       ]),
-                    ])
+                    ],
+                    ),
                   ],
                 ),
               )
@@ -425,7 +450,7 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
             children: <Widget>[
               Container(
                 child: Table(
-                  defaultColumnWidth: FixedColumnWidth(53.3),
+                  defaultColumnWidth: FixedColumnWidth(80),
                   border: TableBorder.all(
                       color: Colors.black,
                       style: BorderStyle.solid,
@@ -434,17 +459,13 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                     TableRow(children: [
                       Column(children: [Text('이유두수')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: totalteen_Controller,
                         decoration: const InputDecoration(hintText: " "),)
-                      ]),
-                      Column(children: [Text('마리')
                       ]),
                       Column(children: [Text('이유체중')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: teenweight_Controller,
                         decoration: const InputDecoration(hintText: " "),)
-                      ]),
-                      Column(children: [Text('kg')
                       ]),
                     ])
                   ],
@@ -457,7 +478,7 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
             children: <Widget>[
               Container(
                 child: Table(
-                  defaultColumnWidth: FixedColumnWidth(32),
+                  defaultColumnWidth: FixedColumnWidth(80),
                   border: TableBorder.all(
                       color: Colors.black,
                       style: BorderStyle.solid,
@@ -466,27 +487,41 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                     TableRow(children: [
                       Column(children: [Text('백신1')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: vaccine1_Controller,
                         decoration: const InputDecoration(hintText: " "),)
-                      ]),
-                      Column(children: [Text('월')
-                      ]),
-                      Column(children: [TextField(controller: TextEditingController(),
-                        decoration: const InputDecoration(hintText: " "),)
-                      ]),
-                      Column(children: [Text('일')
                       ]),
                       Column(children: [Text('백신2')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: vaccine2_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
-                      Column(children: [Text('월')
+                    ])
+                  ],
+                ),
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Container(
+                child: Table(
+                  defaultColumnWidth: FixedColumnWidth(80),
+                  border: TableBorder.all(
+                      color: Colors.black,
+                      style: BorderStyle.solid,
+                      width: 1.3),
+                  children: [
+                    TableRow(children: [
+                      Column(children: [Text('백신3')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: vaccine3_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
-                      Column(children: [Text('일')
+                      Column(children: [Text('백신4')
+                      ]),
+                      Column(children: [TextField(controller: vaccine4_Controller,
+                        decoration: const InputDecoration(hintText: " "),)
                       ]),
                     ])
                   ],
@@ -508,7 +543,7 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                     TableRow(children: [
                       Column(children: [Text('특이사항')
                       ]),
-                      Column(children: [TextField(controller: TextEditingController(),
+                      Column(children: [TextField(controller: memo_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
                     ])
@@ -542,7 +577,7 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                   tooltip: 'pick Iamge',
                   onPressed: () async{
                     galleryurl = await getImage(ImageSource.gallery);
-                    print("onpressed");
+                    // print("갤러리 누름");
                     print(galleryurl);
                     // getImage(ImageSource.gallery);
                   },
@@ -552,11 +587,18 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                   child: Icon(Icons.arrow_circle_right_sharp),
                   tooltip: 'pick Iamge',
                   onPressed: () async{
-                    lastresult = modonnum_Controller.text + "," + boarID ;
+                    lastresult = sowID_Controller.text + "," + sowID_Controller.text + "," + birth_year_Controller.text + "," +
+                                  birth_month_Controller.text + "," +birth_day_Controller.text+ "," + adoption_year_Controller.text + "," + adoption_month_Controller.text
+                        + "," + adoption_day_Controller.text + "," + expect_month_Controller.text + "," + expect_day_Controller.text
+                        + "," + givebirth_month_Controller.text + "," +givebirth_day_Controller.text + "," + totalbaby_Controller.text
+                        + "," + feedbaby_Controller.text+ "," +weight_Controller.text+ "," +teen_month_Controller.text+ "," + teen_day_Controller.text
+                        + "," + totalteen_Controller.text + "," + teenweight_Controller.text + "," +vaccine1_Controller.text + "," + vaccine2_Controller.text
+                        + "," + vaccine3_Controller.text + "," + vaccine4_Controller.text+ "," + memo_Controller.text;
                     sowID = '';
-                    print(modonnum_Controller.text);
-                    print(modon);
-                    sendData(modon, lastresult);
+                    //print(분adoption_day_Controller.text)
+                    print(sowID_Controller.text);
+                    //print(modon);
+                    //sendData(modon, lastresult);
                     // getImage(ImageSource.gallery);
                   },
                 ),
@@ -568,7 +610,6 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
 
   }
 }
-
 sendData(String? modon, String? lastresult) async {
   Dio dio = new Dio();
   try {

@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:dio/dio.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:ocr/example/example_camera_overlay_back.dart';
 
 import '../../example/example_camera_overaly.dart';
 import '../api/upload_image.dart';
@@ -83,10 +84,10 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
   //late final String birth_year, birth_month, birth_day, buy_year, buy_month, buy_day, rutting_year, rutting_month, rutting_day, et_ruting_date, delivery_date,
   //baby_meal_day,male_pig_num, baby_num_born, baby_num_survive, rutting_second, survive_baby_num, teenager_weight, estimated_delivery_date, baby_weight, memo;
   // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
-  Future getImage(ImageSource imageSource) async {
+  Future getImage2(ImageSource imageSource) async {
     final image = await picker.pickImage(source: imageSource);
 
-    final temp=await submit_uploadimg(image);
+    final temp = await submit_uploadimg_back(image);
     print("aaaa");
     print(temp);
 
@@ -567,7 +568,7 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                   tooltip: 'pick Image',
                   onPressed: ()  {
                     // getImage(ImageSource.camera);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ExampleCameraOverlay()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ExampleCameraOverlayBack()));
                     // print("open camera");
                   },
                 ),
@@ -576,7 +577,7 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                   child: Icon(Icons.wallpaper),
                   tooltip: 'pick Iamge',
                   onPressed: () async{
-                    galleryurl = await getImage(ImageSource.gallery);
+                    galleryurl = await getImage2(ImageSource.gallery);
                     // print("갤러리 누름");
                     print(galleryurl);
                     // getImage(ImageSource.gallery);
@@ -594,11 +595,8 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                         + "," + feedbaby_Controller.text+ "," +weight_Controller.text+ "," +teen_month_Controller.text+ "," + teen_day_Controller.text
                         + "," + totalteen_Controller.text + "," + teenweight_Controller.text + "," +vaccine1_Controller.text + "," + vaccine2_Controller.text
                         + "," + vaccine3_Controller.text + "," + vaccine4_Controller.text+ "," + memo_Controller.text;
-                    sowID = '';
-                    //print(분adoption_day_Controller.text)
+                    // sowID = '';
                     print(sowID_Controller.text);
-                    //print(modon);
-                    //sendData(modon, lastresult);
                     // getImage(ImageSource.gallery);
                   },
                 ),
@@ -615,7 +613,7 @@ sendData(String? modon, String? lastresult) async {
   try {
 
     Response response = await dio.post(
-        'http://211.107.210.141:3000/ocrs/uploadocr',
+        'http://211.107.210.141:3000/ocrs/uploadimg/back',
         data: {
           'modon' : modon,
           'lastresult' : lastresult

@@ -10,6 +10,7 @@ import 'package:ocr/findUserInfo_page.dart';
 // import 'package:ocr/providers/auth_provider.dart';
 // import 'package:provider/provider.dart';
 import 'package:dio/dio.dart';
+import 'package:ocr/main.dart';
 import 'package:ocr/pages/home_page.dart';
 
 

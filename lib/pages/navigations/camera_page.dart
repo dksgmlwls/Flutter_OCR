@@ -88,7 +88,7 @@ class _UseCameraPageState extends State<UseCameraPage> {
   Future getImage(ImageSource imageSource) async {
     final image = await picker.pickImage(source: imageSource);
 
-    final temp=await submit_uploadimg(image);
+    final temp=await submit_uploadimg_front(image);
     print("aaaa");
     print(temp);
 
@@ -547,8 +547,6 @@ class _UseCameraPageState extends State<UseCameraPage> {
                         + "," +mate_day_Controller.text+ "," + boar1ID_Controller.text + "," +boar2ID_Controller.text+ "," + check_month_Controller.text + "," + check_day_Controller.text + "," +expect_month_Controller.text+ "," + expect_day_Controller.text + "," +vaccine1_Controller.text
                         + "," +vaccine2_Controller.text+ "," + vaccine3_Controller.text+ "," + vaccine4_Controller.text+ "," + memo_Controller.text;
 
-
-
                     print(mate_day_Controller.text);
                     print(boar2ID_Controller.text);
                     print(adoption_day_Controller.text);
@@ -577,7 +575,7 @@ sendData(String? modon, String? lastresult) async {
   try {
 
     Response response = await dio.post(
-        'http://211.107.210.141:3000/ocrs/uploadocr',
+        'http://211.107.210.141:3000/ocrs/uploadimg/front/',
         data: {
           'modon' : modon,
           'lastresult' : lastresult

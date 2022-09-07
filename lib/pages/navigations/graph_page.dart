@@ -6,7 +6,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:ocr/pages/api/upload_image.dart';
 
 class GraphPage extends StatefulWidget {
   static const routeName = '/camera-page';
@@ -21,13 +20,7 @@ class GraphPage extends StatefulWidget {
 
 class _GraphPageState extends State<GraphPage> {
 
-  late String first = '' ;
-
-  //late List<Double> array;
-
-
   String dropdownValue = '총산자수';
-  String title = '';
 
   List<String> spinnerItems = [
     "총산자수",
@@ -43,8 +36,8 @@ class _GraphPageState extends State<GraphPage> {
   var customFormat = DateFormat('yyyy-MM-dd');
 
   List<Color> gradientColors = [
-    const Color(0xff23b6e6),
-    const Color(0xff02d39a),
+    const Color(0xffffffff),
+    const Color(0xffffffff),
   ];
 
   bool showAvg = false;
@@ -81,15 +74,6 @@ class _GraphPageState extends State<GraphPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
-    //그래프 데이터 값 받아오기
-    array = receiveresult();
-    //array = ['1','2','3'];
-
-    first = array[0];
-
-
     return Scaffold(
       body: Center(
 
@@ -131,7 +115,6 @@ class _GraphPageState extends State<GraphPage> {
                       onChanged: (value){
                         setState(() {
                           dropdownValue = value.toString();
-                          title = value.toString();
                         });
                       })
                 ]),
@@ -140,10 +123,9 @@ class _GraphPageState extends State<GraphPage> {
                 RaisedButton(
                     child: Text('그래프보기'),
                     onPressed: () => sendGraph(startDate.toString(), stopDate.toString(), dropdownValue.toString()),
-                    color: Colors.grey,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 20)
+                    color: Colors.white,
+                    textColor: Colors.black,
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10)
                 ),
               ],
             ),
@@ -154,11 +136,11 @@ class _GraphPageState extends State<GraphPage> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10),
                         ),
-                        color: Color(0xff232d37)),
+                        color: Color(0xffffffff)),
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       child: LineChart(
-                        showAvg ? avgChart() : mainChart(),
+                          mainChart()
                       ),
                     ),
                   ),)
@@ -174,7 +156,6 @@ class _GraphPageState extends State<GraphPage> {
 sendGraph(String? start_day, String? stop_day, String? number) async {
   Dio dio = new Dio();
 
-
   try {
     Response response = await dio.post(
         'http://211.107.210.141:3000/statistic',
@@ -183,7 +164,6 @@ sendGraph(String? start_day, String? stop_day, String? number) async {
           'enddate' : stop_day,
           'sqlcol' : number
         }
-
     );
     return response.statusCode;
   } catch (e) {
@@ -191,16 +171,20 @@ sendGraph(String? start_day, String? stop_day, String? number) async {
   } finally {
     dio.close();
   }
-
   return 0;
 }
 
 
-//데이터 별 그래프
+
 LineChartData mainChart() {
-  List<Color> gradientColors = [
+  List<Color> gradientColors_values = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
+  ];
+
+  List<Color> gradientColors_avg = [
+    const Color(0xfffa0000),
+    const Color(0xffffdd00),
   ];
 
   return LineChartData(
@@ -276,9 +260,6 @@ LineChartData mainChart() {
     lineBarsData: [
       LineChartBarData(
         spots: [
-          // for(double i = 0.0; i < 10 ; i++){
-          //   FlSpot(i, 3),
-          // };
           FlSpot(0, 3),
           FlSpot(2.6, 2),
           FlSpot(4.9, 5),
@@ -288,7 +269,7 @@ LineChartData mainChart() {
           FlSpot(11, 4),
         ],
         isCurved: true,
-        colors: gradientColors,
+        colors: gradientColors_values,
         barWidth: 5,
         isStrokeCapRound: true,
         dotData: FlDotData(
@@ -297,16 +278,15 @@ LineChartData mainChart() {
         belowBarData: BarAreaData(
           show: true,
           colors:
-          gradientColors.map((color) => color.withOpacity(0.3)).toList(),
+          gradientColors_values.map((color) => color.withOpacity(0.3)).toList(),
         ),
       ),
     ],
+
   );
 
 }
 
-
-//평균그래프
 LineChartData avgChart() {
 
   List<Color> gradientColors = [
@@ -418,3 +398,4 @@ LineChartData avgChart() {
     ],
   );
 }
+

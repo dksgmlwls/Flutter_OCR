@@ -17,21 +17,21 @@ import 'package:flutter_native_image/flutter_native_image.dart';
 main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
-    const ExampleCameraOverlay(),
+    const ExampleCameraOverlayBack(),
   );
 }
 
-class ExampleCameraOverlay extends StatefulWidget {
+class ExampleCameraOverlayBack extends StatefulWidget {
 
   static const routeName = '/graph-page';
 
-  const ExampleCameraOverlay({Key? key}) : super(key: key);
+  const ExampleCameraOverlayBack({Key? key}) : super(key: key);
 
   @override
-  _ExampleCameraOverlayState createState() => _ExampleCameraOverlayState();
+  _ExampleCameraOverlayBackState createState() => _ExampleCameraOverlayBackState();
 }
 
-class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
+class _ExampleCameraOverlayBackState extends State<ExampleCameraOverlayBack> {
   OverlayFormat format = OverlayFormat.cardID1;
   int tab = 0;
 
@@ -163,23 +163,13 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
                                 ),
                                 OutlinedButton(
                                   onPressed: () async {
-                                    // final croppedfile = await cropImage(file.path);
-                                    // print("start");
+
                                     ImageProperties properties = await FlutterNativeImage.getImageProperties(file.path);
-                                    // print("properties");
-                                    // print(properties.width!-500);
-                                    // print(properties.height);
-                                    // print(width.toInt());
-                                    // print(height.toInt());
-                                    // 250, 40, properties.width - 500, 640
-                                    //400, 500, width.toInt(),height.toInt()
-                                    // File croppedfile = await FlutterNativeImage.cropImage(file.path,350,300, properties.width! - 500, 640);
-                                    // File croppedfile = await FlutterNativeImage.cropImage(file.path, 210, 30, properties.width! - 500, 640);
 
                                     File croppedfile = await FlutterNativeImage.cropImage(file.path, 210, 30, properties.width! - 500, 640);
 
                                     // print(croppedfile.path);
-                                    final filename = await submit_uploadimg_front(croppedfile);
+                                    final filename = await submit_uploadimg_back(croppedfile);
                                     // print(filename);
 
                                     Navigator.of(context).popUntil((route) => route.isFirst);
@@ -197,12 +187,10 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
                             ),
                             actions: [
                               OutlinedButton(
-                                // onPressed: () => Navigator.of(context).pop(),
-                                //
-                                //     Navigator.pop(context, file.path);
+
                                   onPressed: () async {
                                     final croppedfile = await cropImage(file.path);
-                                    final filename = await submit_uploadimg_front(croppedfile); // 서버에 저장된 이름을 반환해줌 (이름을 알아야 url로 들어가니까)
+                                    final filename = await submit_uploadimg_back(croppedfile); // 서버에 저장된 이름을 반환해줌 (이름을 알아야 url로 들어가니까)
                                     print(file.path);
                                     // final filename = await submit_uploadimg(file.path);
                                     // print(filename);
@@ -236,7 +224,7 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
 
                     ),
                     info:
-                    '박스에 맞춰 사진찍어주세요');
+                    '박스에 맞춰 사진 찍어주세요');
               } else {
                 return const Align(
                     alignment: Alignment.center,

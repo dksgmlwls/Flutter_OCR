@@ -1,4 +1,4 @@
-import 'dart:ffi';
+// import 'dart:ffi';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
@@ -154,29 +154,60 @@ class _GraphPageState extends State<GraphPage> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       child: LineChart(
-                         LineChartData(
-                           borderData: FlBorderData(show: false),
-                           lineBarsData: [
-                             //The red line
-                             LineChartBarData(
-                               spots: dummyData1,
-                               isCurved: true,
-                               barWidth: 3,
-                               colors: [
-                                 Colors.red,
-                               ]
-                             ),
-                             LineChartBarData(
-                                 spots: dummyData2,
-                                 isCurved: true,
-                                 barWidth: 3,
-                                 colors: [
-                                   Colors.blue,
-                                 ]
-                             ),
+                        showAvg ? mainChart() : mainChart(),
+                        // LineChartData(
+                        //   borderData: FlBorderData(show: false),
+                        // lineTouchData: LineTouchData(enabled: true),
+                        // gridData: FlGridData(
+                        //   show: true,
+                        //   drawHorizontalLine: true,
+                        //   getDrawingVerticalLine: (value) {
+                        //     return FlLine(
+                        //       color: const Color(0xff37434d),
+                        //       strokeWidth: 1,
+                        //     );
+                        //   },
+                        //   getDrawingHorizontalLine: (value) {
+                        //     return FlLine(
+                        //       color: const Color(0xff37434d),
+                        //       strokeWidth: 1,
+                        //     );
+                        //   }
+                        // ),
 
-                           ]
-                         )
+                        // lineBarsData: [
+                        //   //The red line
+                        //   LineChartBarData(
+                        //     spots: dummyData1,
+                        //     isCurved: true,
+                        //     barWidth: 3,
+                        //     colors: [
+                        //       Colors.red,
+                        //     ]
+                        //   ),
+                        //   LineChartBarData(
+                        //       spots: dummyData2,
+                        //       isCurved: true,
+                        //       barWidth: 3,
+                        //       colors: [
+                        //         Colors.blue,
+                        //       ]
+                        //
+                        //   ),
+
+                        // belowBarData: BarAreaData(show: true, colors: [
+                        //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
+                        //       .lerp(0.2)
+                        //       .withOpacity(0.1),
+                        //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
+                        //       .lerp(0.2)
+                        //       .withOpacity(0.1),
+                        // ])
+
+
+                        //   ]
+                        //
+                        // )
 
 
 
@@ -310,6 +341,7 @@ LineChartData mainChart() {
           FlSpot(11, 4),
         ],
 
+
         isCurved: true,
         colors: gradientColors_values,
         barWidth: 5,
@@ -321,6 +353,39 @@ LineChartData mainChart() {
           show: true,
           colors:
           gradientColors_values.map((color) => color.withOpacity(0.3)).toList(),
+        ),
+      ),
+      LineChartBarData(
+        spots: [
+          FlSpot(0, 3.44),
+          FlSpot(2.6, 3.44),
+          FlSpot(4.9, 3.44),
+          FlSpot(6.8, 3.44),
+          FlSpot(8, 3.44),
+          FlSpot(9.5, 3.44),
+          FlSpot(11, 3.44),
+        ],
+        isCurved: true,
+        // colors: [
+        //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
+        //       .lerp(0.2),
+        //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
+        //       .lerp(0.2),
+        // ],
+        barWidth: 5,
+        isStrokeCapRound: true,
+        dotData: FlDotData(
+          show: false,
+        ),
+        belowBarData: BarAreaData(show: true,
+          //     colors: [
+          //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
+          //       .lerp(0.2)
+          //       .withOpacity(0.1),
+          //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
+          //       .lerp(0.2)
+          //       .withOpacity(0.1),
+          // ]
         ),
       ),
     ],

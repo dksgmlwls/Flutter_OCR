@@ -163,24 +163,10 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
                                 ),
                                 OutlinedButton(
                                   onPressed: () async {
-                                    // final croppedfile = await cropImage(file.path);
-                                    // print("start");
+
                                     ImageProperties properties = await FlutterNativeImage.getImageProperties(file.path);
-                                    // print("properties");
-                                    // print(properties.width!-500);
-                                    // print(properties.height);
-                                    // print(width.toInt());
-                                    // print(height.toInt());
-                                    // 250, 40, properties.width - 500, 640
-                                    //400, 500, width.toInt(),height.toInt()
-                                    // File croppedfile = await FlutterNativeImage.cropImage(file.path,350,300, properties.width! - 500, 640);
-                                    // File croppedfile = await FlutterNativeImage.cropImage(file.path, 210, 30, properties.width! - 500, 640);
 
-                                    // File croppedfile = await FlutterNativeImage.cropImage(file.path, 210, 30, properties.width! - 500, 640);
-
-                                    // print(croppedfile.path);
                                     final filename = await submit_uploadimg_front(file);
-                                    // print(filename);
 
                                     Navigator.of(context).popUntil((route) => route.isFirst);
                                     await Navigator.push(context,MaterialPageRoute(builder: (context) =>

@@ -206,7 +206,8 @@ class _ExampleCameraOverlayBackState extends State<ExampleCameraOverlayBack> {
                             content: SizedBox( // 뒤로가기 버튼 만든 그 페이지 사이즈박스
                                 width: double.infinity,
                                 child: AspectRatio(
-                                  aspectRatio: overlay.ratio!,
+                                  // aspectRatio: overlay.ratio!,
+                                  aspectRatio: width/height,
                                   child: Container(
                                     decoration: BoxDecoration(
                                         image: DecorationImage(

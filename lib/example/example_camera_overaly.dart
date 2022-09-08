@@ -176,10 +176,10 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
                                     // File croppedfile = await FlutterNativeImage.cropImage(file.path,350,300, properties.width! - 500, 640);
                                     // File croppedfile = await FlutterNativeImage.cropImage(file.path, 210, 30, properties.width! - 500, 640);
 
-                                    File croppedfile = await FlutterNativeImage.cropImage(file.path, 210, 30, properties.width! - 500, 640);
+                                    // File croppedfile = await FlutterNativeImage.cropImage(file.path, 210, 30, properties.width! - 500, 640);
 
                                     // print(croppedfile.path);
-                                    final filename = await submit_uploadimg_front(croppedfile);
+                                    final filename = await submit_uploadimg_front(file);
                                     // print(filename);
 
                                     Navigator.of(context).popUntil((route) => route.isFirst);
@@ -218,7 +218,8 @@ class _ExampleCameraOverlayState extends State<ExampleCameraOverlay> {
                             content: SizedBox( // 뒤로가기 버튼 만든 그 페이지 사이즈박스
                                 width: double.infinity,
                                 child: AspectRatio(
-                                  aspectRatio: overlay.ratio!,
+                                  // aspectRatio: overlay.ratio!,
+                                  aspectRatio: width/height,
                                   child: Container(
                                     decoration: BoxDecoration(
                                         image: DecorationImage(

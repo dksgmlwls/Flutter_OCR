@@ -20,6 +20,19 @@ class GraphPage extends StatefulWidget {
 
 class _GraphPageState extends State<GraphPage> {
 
+  // Generate some dummy data for the cahrt
+  // This will be used to draw the red line
+  final List<FlSpot> dummyData1 = List.generate(8, (index) {
+    return FlSpot(index.toDouble(), index * Random().nextDouble());
+  });
+
+  // This will be used to draw the orange line
+  final List<FlSpot> dummyData2 = List.generate(8, (index) {
+    return FlSpot(index.toDouble(), index * Random().nextDouble());
+  });
+
+
+
   String dropdownValue = '총산자수';
 
   List<String> spinnerItems = [
@@ -55,6 +68,7 @@ class _GraphPageState extends State<GraphPage> {
         startDate = picked;
       });
   }
+
 
   Future<Null> showPicker2(BuildContext context) async {
 
@@ -140,7 +154,32 @@ class _GraphPageState extends State<GraphPage> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       child: LineChart(
-                          mainChart()
+                         LineChartData(
+                           borderData: FlBorderData(show: false),
+                           lineBarsData: [
+                             //The red line
+                             LineChartBarData(
+                               spots: dummyData1,
+                               isCurved: true,
+                               barWidth: 3,
+                               colors: [
+                                 Colors.red,
+                               ]
+                             ),
+                             LineChartBarData(
+                                 spots: dummyData2,
+                                 isCurved: true,
+                                 barWidth: 3,
+                                 colors: [
+                                   Colors.blue,
+                                 ]
+                             ),
+
+                           ]
+                         )
+
+
+
                       ),
                     ),
                   ),)
@@ -177,6 +216,7 @@ sendGraph(String? start_day, String? stop_day, String? number) async {
 
 
 LineChartData mainChart() {
+
   List<Color> gradientColors_values = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
@@ -193,24 +233,25 @@ LineChartData mainChart() {
       drawVerticalLine: true,
       getDrawingHorizontalLine: (value) {
         return FlLine(
-          color: Color(0xff37434d),
+          color: Color(0xff000000),
           strokeWidth: 1,
         );
       },
       getDrawingVerticalLine: (value) {
         return FlLine(
-          color: Color(0xff37434d),
+          color: Color(0xff000000),
           strokeWidth: 1,
         );
       },
     ),
+
     titlesData: FlTitlesData(
       show: true,
       bottomTitles: SideTitles(
         showTitles: true,
         reservedSize: 22,
         textStyle: const TextStyle(
-            color: Color(0xff68737d),
+            color: Color(0xff000000),
             fontWeight: FontWeight.bold,
             fontSize: 16),
         getTitles: (value) {
@@ -230,7 +271,7 @@ LineChartData mainChart() {
       leftTitles: SideTitles(
         showTitles: true,
         textStyle: const TextStyle(
-          color: Color(0xff67727d),
+          color: Color(0xff000000),
           fontWeight: FontWeight.bold,
           fontSize: 15,
         ),
@@ -252,7 +293,7 @@ LineChartData mainChart() {
     ),
     borderData: FlBorderData(
         show: true,
-        border: Border.all(color: const Color(0xff37434d), width: 1)),
+        border: Border.all(color: const Color(0xff000000), width: 1)),
     minX: 0,
     maxX: 11,
     minY: 0,
@@ -268,6 +309,7 @@ LineChartData mainChart() {
           FlSpot(9.5, 3),
           FlSpot(11, 4),
         ],
+
         isCurved: true,
         colors: gradientColors_values,
         barWidth: 5,
@@ -286,116 +328,3 @@ LineChartData mainChart() {
   );
 
 }
-
-LineChartData avgChart() {
-
-  List<Color> gradientColors = [
-    const Color(0xff23b6e6),
-    const Color(0xff02d39a),
-  ];
-
-  return LineChartData(
-    lineTouchData: LineTouchData(enabled: false),
-    gridData: FlGridData(
-      show: true,
-      drawHorizontalLine: true,
-      getDrawingVerticalLine: (value) {
-        return FlLine(
-          color: const Color(0xff37434d),
-          strokeWidth: 1,
-        );
-      },
-      getDrawingHorizontalLine: (value) {
-        return FlLine(
-          color: const Color(0xff37434d),
-          strokeWidth: 1,
-        );
-      },
-    ),
-    titlesData: FlTitlesData(
-      show: true,
-      bottomTitles: SideTitles(
-        showTitles: true,
-        reservedSize: 22,
-        textStyle: const TextStyle(
-            color: Color(0xff68737d),
-            fontWeight: FontWeight.bold,
-            fontSize: 16),
-        getTitles: (value) {
-          switch (value.toInt()) {
-            case 2:
-              return 'MAR';
-            case 5:
-              return 'JUN';
-            case 8:
-              return 'SEP';
-          }
-          return '';
-        },
-        margin: 8,
-      ),
-      leftTitles: SideTitles(
-        showTitles: true,
-        textStyle: const TextStyle(
-          color: Color(0xff67727d),
-          fontWeight: FontWeight.bold,
-          fontSize: 15,
-        ),
-        getTitles: (value) {
-          switch (value.toInt()) {
-            case 1:
-              return '10k';
-            case 3:
-              return '30k';
-            case 5:
-              return '50k';
-          }
-          return '';
-        },
-        reservedSize: 28,
-        margin: 12,
-      ),
-    ),
-    borderData: FlBorderData(
-        show: true,
-        border: Border.all(color: const Color(0xff37434d), width: 1)),
-    minX: 0,
-    maxX: 11,
-    minY: 0,
-    maxY: 6,
-    lineBarsData: [
-      LineChartBarData(
-        spots: [
-          FlSpot(0, 3.44),
-          FlSpot(2.6, 3.44),
-          FlSpot(4.9, 3.44),
-          FlSpot(6.8, 3.44),
-          FlSpot(8, 3.44),
-          FlSpot(9.5, 3.44),
-          FlSpot(11, 3.44),
-        ],
-        isCurved: true,
-        // colors: [
-        //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
-        //       .lerp(0.2),
-        //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
-        //       .lerp(0.2),
-        // ],
-        barWidth: 5,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: false,
-        ),
-        belowBarData: BarAreaData(show: true, colors: [
-          ColorTween(begin: gradientColors[0], end: gradientColors[1])
-              .lerp(0.2)!
-              .withOpacity(0.1),
-          ColorTween(begin: gradientColors[0], end: gradientColors[1])
-              .lerp(0.2)!
-              .withOpacity(0.1),
-        ]),
-      ),
-    ],
-  );
-}
-

@@ -528,8 +528,8 @@ class _UseCameraPageState extends State<UseCameraPage> {
                   onPressed: () async{
                     ImagePicker picker = ImagePicker();
                     // galleryurl = (await picker.getImage(source: ImageSource.gallery)) as String;
-                    galleryurl = (await ImagePicker().pickImage(source: ImageSource.gallery)) as String;
-
+                    //galleryurl = (await ImagePicker().pickImage(source: ImageSource.gallery)) as String;
+                    galleryurl = await getImage(ImageSource.gallery);
                     // galleryurl = (await ImagePicker.pickImage(source: ImageSource.gallery)) as String;
                     // print("갤러리 누름");
                     print(galleryurl);

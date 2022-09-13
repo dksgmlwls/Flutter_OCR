@@ -568,7 +568,7 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                   tooltip: 'pick Image',
                   onPressed: ()  {
                     // getImage(ImageSource.camera);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ExampleCameraOverlayBack()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ExampleCameraOverlay()));
                     // print("open camera");
                   },
                 ),
@@ -577,6 +577,7 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                   child: Icon(Icons.wallpaper),
                   tooltip: 'pick Iamge',
                   onPressed: () async{
+                    //galleryurl = await getImage2(ImageSource.gallery);
                     galleryurl = await getImage2(ImageSource.gallery);
                     // print("갤러리 누름");
                     print(galleryurl);

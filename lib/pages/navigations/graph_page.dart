@@ -1,4 +1,5 @@
 // import 'dart:ffi';
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
@@ -6,6 +7,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:ocr/pages/api/upload_image.dart';
 
 class GraphPage extends StatefulWidget {
   static const routeName = '/camera-page';
@@ -20,6 +22,11 @@ class GraphPage extends StatefulWidget {
 
 class _GraphPageState extends State<GraphPage> {
 
+  List<dynamic> graph_array = [];
+  late double max = 0.0;
+  late double min = 0.0;
+  late double average = 0.0;
+
   // Generate some dummy data for the cahrt
   // This will be used to draw the red line
   final List<FlSpot> dummyData1 = List.generate(8, (index) {
@@ -32,6 +39,11 @@ class _GraphPageState extends State<GraphPage> {
   });
 
 
+
+  print(graph_array) {
+    // TODO: implement print
+
+  }
 
   String dropdownValue = '총산자수';
 
@@ -87,6 +99,16 @@ class _GraphPageState extends State<GraphPage> {
   }
 
   @override
+
+  final graph_array = receiveresult();
+
+  print(graph_array.length);
+
+
+
+
+
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -155,61 +177,6 @@ class _GraphPageState extends State<GraphPage> {
                       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       child: LineChart(
                         showAvg ? mainChart() : mainChart(),
-                        // LineChartData(
-                        //   borderData: FlBorderData(show: false),
-                        // lineTouchData: LineTouchData(enabled: true),
-                        // gridData: FlGridData(
-                        //   show: true,
-                        //   drawHorizontalLine: true,
-                        //   getDrawingVerticalLine: (value) {
-                        //     return FlLine(
-                        //       color: const Color(0xff37434d),
-                        //       strokeWidth: 1,
-                        //     );
-                        //   },
-                        //   getDrawingHorizontalLine: (value) {
-                        //     return FlLine(
-                        //       color: const Color(0xff37434d),
-                        //       strokeWidth: 1,
-                        //     );
-                        //   }
-                        // ),
-
-                        // lineBarsData: [
-                        //   //The red line
-                        //   LineChartBarData(
-                        //     spots: dummyData1,
-                        //     isCurved: true,
-                        //     barWidth: 3,
-                        //     colors: [
-                        //       Colors.red,
-                        //     ]
-                        //   ),
-                        //   LineChartBarData(
-                        //       spots: dummyData2,
-                        //       isCurved: true,
-                        //       barWidth: 3,
-                        //       colors: [
-                        //         Colors.blue,
-                        //       ]
-                        //
-                        //   ),
-
-                        // belowBarData: BarAreaData(show: true, colors: [
-                        //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                        //       .lerp(0.2)
-                        //       .withOpacity(0.1),
-                        //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                        //       .lerp(0.2)
-                        //       .withOpacity(0.1),
-                        // ])
-
-
-                        //   ]
-                        //
-                        // )
-
-
 
                       ),
                     ),
@@ -341,7 +308,6 @@ LineChartData mainChart() {
           FlSpot(11, 4),
         ],
 
-
         isCurved: true,
         colors: gradientColors_values,
         barWidth: 5,
@@ -366,27 +332,18 @@ LineChartData mainChart() {
           FlSpot(11, 3.44),
         ],
         isCurved: true,
-        // colors: [
-        //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
-        //       .lerp(0.2),
-        //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
-        //       .lerp(0.2),
-        // ],
+        colors: gradientColors_avg,
         barWidth: 5,
         isStrokeCapRound: true,
         dotData: FlDotData(
-          show: false,
+          show: true,
         ),
-        belowBarData: BarAreaData(show: true,
-          //     colors: [
-          //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
-          //       .lerp(0.2)
-          //       .withOpacity(0.1),
-          //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
-          //       .lerp(0.2)
-          //       .withOpacity(0.1),
-          // ]
-        ),
+        // belowBarData: BarAreaData(
+        //   show: true,
+        //   colors:
+        //   gradientColors_avg.map((color) => color.withOpacity(0.3)).toList(),
+        // ),
+
       ),
     ],
 

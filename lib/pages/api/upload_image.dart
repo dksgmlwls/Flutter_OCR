@@ -1,16 +1,28 @@
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart'; //쿠퍼티노 위젯
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import '../home_page.dart';
 
-late List<dynamic> array = List.filled(30, "",growable: true);
+//late List<dynamic> array = List.filled(30, "",growable: true);
+late List<String> array = List.filled(30, "",growable: true);
+late List<dynamic> array_graph = List.filled(10, "", growable: true);
 
 receiveresult(){
   print(array);
   return array;
 }
+
+receiveresult_graph(){
+  print("서버에서 그래프 가져올 함수임");
+  print(array_graph);
+  print("서버에서 그래프 가져왔나잉?????/");
+  return array_graph;
+}
+
 
 submit_uploadimg_front(dynamic file) async {
   String filename = "no";

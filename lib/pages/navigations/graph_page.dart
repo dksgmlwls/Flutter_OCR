@@ -22,10 +22,10 @@ class GraphPage extends StatefulWidget {
 
 class _GraphPageState extends State<GraphPage> {
 
-  List<dynamic> graph_array = [];
-  late double max = 0.0;
-  late double min = 0.0;
-  late double average = 0.0;
+ // List<dynamic> graph_array = [];
+  late double max_value = 0.0;
+  late double min_value = 0.0;
+  late double average_value = 0.0;
 
   // Generate some dummy data for the cahrt
   // This will be used to draw the red line
@@ -38,12 +38,6 @@ class _GraphPageState extends State<GraphPage> {
     return FlSpot(index.toDouble(), index * Random().nextDouble());
   });
 
-
-
-  print(graph_array) {
-    // TODO: implement print
-
-  }
 
   String dropdownValue = '총산자수';
 
@@ -81,6 +75,16 @@ class _GraphPageState extends State<GraphPage> {
       });
   }
 
+  void graph_array() {
+    print("그래프 데이터 가져올거임?????????");
+    final array_graph = receiveresult_graph();
+    print("그래프 데이터 가져왔음!!!!!!!!!!");
+    print(array_graph);
+    // max_value = array[array.length-2] as double;
+    // print(max_value);
+
+  }
+
 
   Future<Null> showPicker2(BuildContext context) async {
 
@@ -96,20 +100,12 @@ class _GraphPageState extends State<GraphPage> {
       setState(() {
         stopDate = picked2;
       });
+
   }
 
   @override
-
-  final graph_array = receiveresult();
-
-  print(graph_array.length);
-
-
-
-
-
-
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Center(
 
@@ -158,7 +154,12 @@ class _GraphPageState extends State<GraphPage> {
               children: [
                 RaisedButton(
                     child: Text('그래프보기'),
-                    onPressed: () => sendGraph(startDate.toString(), stopDate.toString(), dropdownValue.toString()),
+                   // onPressed: () => sendGraph(startDate.toString(), stopDate.toString(), dropdownValue.toString()),
+                    onPressed: () {
+                      sendGraph(startDate.toString(), stopDate.toString(), dropdownValue.toString());
+                      graph_array();
+                    },
+
                     color: Colors.white,
                     textColor: Colors.black,
                     padding: EdgeInsets.fromLTRB(10, 10, 10, 10)

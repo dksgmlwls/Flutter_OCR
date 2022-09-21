@@ -1,8 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:editable/commons/math_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ocr/providers/auth_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:ocr/src/customization/calendar_style.dart';
+import 'package:ocr/src/customization/header_style.dart';
+import 'package:ocr/src/shared/utils.dart';
+import 'package:ocr/src/table_calendar.dart';
 
 class MemoryPage extends StatefulWidget {
   static const routeName = '/camera-page';
@@ -53,75 +57,113 @@ class FindUserMine extends StatefulWidget {
 }
 
 class _FindUserMineState extends State<FindUserMine> {
-  final formKey = GlobalKey<FormState>();
+  final formKey_mine = GlobalKey<FormState>();
+  late Map<DateTime, List<Event>> selectedEvents_mine;
+  CalendarFormat format_mine = CalendarFormat.month;
+  DateTime selectedDay_mine = DateTime.now();
+  DateTime focusedDay_mine = DateTime.now();
+  TextEditingController _eventController_mine = TextEditingController();
 
+  @override
+  void initState() {
+    selectedEvents_mine = {};
+    super.initState();
+  }
+
+  List<Event> _getEventsfromDay(DateTime date) {
+    return selectedEvents_mine[date] ?? [];
+  }
+
+  @override
+  void dispose() {
+    _eventController_mine.dispose();
+    super.dispose();
+  }
 
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              child: Text("가입 시 등록하신 휴대폰 번호를 입력해주세요.\n이메일 주소를 알려드립니다."),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              child: Text(
-                "휴대폰 번호",
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-              ),
-              margin: EdgeInsets.only(bottom: 10),
-            ),
-            TextFormField(
-              keyboardType: TextInputType.name,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                hintText: "(예시) 01012341234",
-              ),
-              onSaved: (value) {
+    return Scaffold(
+      body: Column(
+        children: [
+          TableCalendar(
+            focusedDay: selectedDay_mine,
+            firstDay: DateTime(2022),
+            lastDay: DateTime(2101),
+            calendarFormat: format_mine,
+            onFormatChanged: (CalendarFormat _format){
+              setState(() {
+                format_mine = _format;
+              });
+            },
+            startingDayOfWeek: StartingDayOfWeek.sunday,
+            daysOfWeekVisible: true,
 
-              },
-              validator: (value) {
-                if (value!.length < 10) {
-                  return "휴대폰 번호는 10자 이상입니다.";
-                }
-              },
-            ),
-            SizedBox(height: 20),
-            FlatButton(
-              child: Container(
-                height: 40,
-                width: double.infinity,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.grey,
-                ),
-                child: Text("아이디 찾기",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                    textAlign: TextAlign.center),
+            //Day Changed
+            onDaySelected: (DateTime selectDay, DateTime focusDay){
+              setState(() {
+                selectedDay_mine = selectDay;
+                focusedDay_mine = focusDay;
+              });
+              print(focusedDay_mine);
+            },
+            selectedDayPredicate: (DateTime date){
+              sendRecord(_eventController_mine.text);
+              return isSameDay(selectedDay_mine, date);
+            },
+
+            eventLoader: _getEventsfromDay,
+
+            //To style the calendar
+            calendarStyle: CalendarStyle(
+              isTodayHighlighted: true,
+              selectedDecoration: BoxDecoration(
+                color: Colors.blue,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
               ),
-              onPressed: () {
-              },
+              selectedTextStyle: TextStyle(color: Colors.white),
+              todayDecoration: BoxDecoration(
+                color: Colors.purpleAccent,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              defaultDecoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              weekendDecoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
             ),
-            // formKey.currentState!.validate() ? Container() : Container()
-          ],
-        ),
+            headerStyle: HeaderStyle(
+                formatButtonVisible: true,
+                titleCentered: true,
+                formatButtonShowsNext: false,
+                formatButtonDecoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                formatButtonTextStyle: TextStyle(
+                  color: Colors.white,
+                ),
+
+            ),
+          ),
+
+        ],
       ),
+
     );
   }
 }
 
+class Event {
+  final String title;
+  Event({required this.title});
+  String toString() => this.title;
+}
 
 class FindUserEverybody extends StatefulWidget {
   @override
@@ -129,143 +171,109 @@ class FindUserEverybody extends StatefulWidget {
 }
 
 class _FindUserEverybodyState extends State<FindUserEverybody> {
-  final formKey = GlobalKey<FormState>();
-  late String email;
-  var _isLoading = false;
+  final formKey_every = GlobalKey<FormState>();
 
-  Future<void> _submit() async {
-    if (formKey.currentState!.validate() == false) {
-      return;
-    } else {
-      FocusManager.instance.primaryFocus!.unfocus(); // focus 제거
-      formKey.currentState!.save();
-      try {
-        setState(() {
-          _isLoading = true;
-        });
-        await Provider.of<AuthProvider>(context, listen: false)
-            .findPassword(email);
-        setState(() {
-          _isLoading = false;
-        });
-      } catch (error) {
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext ctx) {
-            return AlertDialog(
-              content: Text("이메일을 확인해주세요."),
-              actions: [
-                FlatButton(
-                  child: Text("확인"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            );
-          },
-        );
-        setState(() {
-          _isLoading = false;
-        });
-        return;
-      }
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext ctx) {
-          return AlertDialog(
-            content: Text("입력하신 이메일로 임시 비밀번호가 전송되었습니다."),
-            actions: [
-              FlatButton(
-                child: Text("확인"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        },
-      );
-      setState(() {
-        _isLoading = false;
-      });
-    }
+  late Map<DateTime, List<Event>> selectedEvents_every;
+  CalendarFormat format_every = CalendarFormat.month;
+  DateTime selectedDay_every = DateTime.now();
+  DateTime focusedDay_every = DateTime.now();
+  TextEditingController _eventController_every = TextEditingController();
+
+  @override
+  void initState() {
+    selectedEvents_every = {};
+    super.initState();
+  }
+
+  List<Event> _getEventsfromDay(DateTime date) {
+    return selectedEvents_every[date] ?? [];
   }
 
   @override
+  void dispose() {
+    _eventController_every.dispose();
+    super.dispose();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              child: Text("가입 시 등록하신 이메일 주소를 입력해주세요.\n비밀번호 재설정 링크를 보내드립니다."),
-            ),
-            SizedBox(height: 20),
-            Container(
-              child: Text(
-                "이메일 주소",
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+    return Scaffold(
+      body: Column(
+        children: [
+          TableCalendar(
+            focusedDay: selectedDay_every,
+            firstDay: DateTime(2022),
+            lastDay: DateTime(2101),
+            calendarFormat: format_every,
+            onFormatChanged: (CalendarFormat _format){
+              setState(() {
+                format_every = _format;
+              });
+            },
+            startingDayOfWeek: StartingDayOfWeek.sunday,
+            daysOfWeekVisible: true,
+
+            //Day Changed
+            onDaySelected: (DateTime selectDay, DateTime focusDay){
+              setState(() {
+                selectedDay_every = selectDay;
+                focusedDay_every = focusDay;
+              });
+              print(focusedDay_every);
+              sendRecord(_eventController_every.text);
+            },
+            selectedDayPredicate: (DateTime date){
+              return isSameDay(selectedDay_every, date);
+            },
+
+            eventLoader: _getEventsfromDay,
+
+            //To style the calendar
+            calendarStyle: CalendarStyle(
+              isTodayHighlighted: true,
+              selectedDecoration: BoxDecoration(
+                color: Colors.blue,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
               ),
-              margin: EdgeInsets.only(bottom: 10),
-            ),
-            TextFormField(
-              keyboardType: TextInputType.emailAddress,
-              textInputAction: TextInputAction.done,
-              decoration: InputDecoration(
-                hintText: "이메일 주소를 입력해주세요.",
+              selectedTextStyle: TextStyle(color: Colors.white),
+              todayDecoration: BoxDecoration(
+                color: Colors.purpleAccent,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
               ),
-              onSaved: (value) {
-                email = value!;
-              },
-              validator: (value) {
-                if (value!.length < 10) {
-                  return "이메일 주소를 입력해주세요.";
-                }
-              },
-            ),
-            SizedBox(height: 20),
-            FlatButton(
-              child: Container(
-                height: 40,
-                width: double.infinity,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.grey,
-                ),
-                child: _isLoading
-                    ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-                    : Text("비밀번호 찾기",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                    textAlign: TextAlign.center),
+              defaultDecoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
               ),
-              onPressed: () {
-                _submit();
-              },
+              weekendDecoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
             ),
-            // formKey.currentState!.validate() ? Container() : Container()
-          ],
-        ),
+            headerStyle: HeaderStyle(
+              formatButtonVisible: true,
+              titleCentered: true,
+              formatButtonShowsNext: false,
+              formatButtonDecoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              formatButtonTextStyle: TextStyle(
+                color: Colors.white,
+              ),
+
+            ),
+          ),
+        ],
       ),
+
     );
   }
 }
 
-sendGraph(String? day) async {
+sendRecord(String? day) async {
   Dio dio = new Dio();
 
   try {

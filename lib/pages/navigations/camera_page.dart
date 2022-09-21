@@ -87,7 +87,7 @@ class _UseCameraPageState extends State<UseCameraPage> {
   Future getImage(ImageSource imageSource) async {
     final image = await picker.pickImage(source: imageSource);
 
-    final temp=await submit_uploadimg_front(image);
+    final temp = await submit_uploadimg_front(image);
     print("aaaa");
     print(temp);
 
@@ -580,6 +580,7 @@ sendData(String? modon, String? lastresult) async {
           'lastresult' : lastresult
         }
     );
+
     final jsonBody = response.data;
     return response.statusCode;
   } catch (e) {

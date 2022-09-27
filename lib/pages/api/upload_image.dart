@@ -9,19 +9,20 @@ import '../home_page.dart';
 
 //late List<dynamic> array = List.filled(30, "",growable: true);
 late List<String> array = List.filled(30, "",growable: true);
-late List<dynamic> array_graph = List.filled(10, "", growable: true);
+late List<String> array_graph = List.filled(8, "", growable: true);
+
 
 receiveresult(){
   print(array);
   return array;
 }
-
-receiveresult_graph(){
-  print("서버에서 그래프 가져올 함수임");
-  print(array_graph);
-  print("서버에서 그래프 가져왔나잉?????/");
-  return array_graph;
-}
+//
+// receiveresult_graph(){
+//   print("서버에서 그래프 가져올 함수임");
+//   print(array_graph);
+//   print("서버에서 그래프 가져왔나잉?????/");
+//   return array_graph;
+// }
 
 
 submit_uploadimg_front(dynamic file) async {
@@ -95,7 +96,7 @@ uploadimg_front(String imagePath) async {
           filename: fileName, contentType:MediaType("image","jpg")),
     });
     Response response = await dio.post(
-        'http://211.107.210.141:3000/ocrs/uploadimg/front/',
+        'http://211.107.210.141:3001/ocrs/uploadimg/front/',
         data:_formData
     );
     print(response);
@@ -123,7 +124,7 @@ uploading_back(String imagePath) async {
           filename: fileName, contentType:MediaType("image","jpg")),
     });
     Response response = await dio.post(
-        'http://211.107.210.141:3000/ocrs/uploadimg/back',
+        'http://211.107.210.141:3001/ocrs/uploadimg/back',
         data:_formData
     );
     print(response);

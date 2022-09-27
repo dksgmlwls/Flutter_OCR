@@ -322,7 +322,7 @@ signUp(String? _email, String? _password, String? _name, String? _phoneNumber) a
   Dio dio = new Dio();
   try {
     Response response = await dio.post(
-        'http://211.107.210.141:3000/users/signup/',
+        'http://211.107.210.141:3001/users/signup/',
         data: {
           'email' : _email,
           'password' : _password,

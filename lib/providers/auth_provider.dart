@@ -20,7 +20,7 @@ class AuthProvider with ChangeNotifier {
 
   // 1. 로그인
   Future<String> login(String? id, String? password) async {
-    final url = Uri.parse('https://211.107.210.141:3000/users/login/');
+    final url = Uri.parse('https://211.107.210.141:3001/users/login/');
     try {
       print(url);
       final response = await http.post(
@@ -55,7 +55,7 @@ class AuthProvider with ChangeNotifier {
   // 3. 회원가입
   Future<void> signUp(
       String name, String phoneNumber, String email, String password) async {
-    final url = Uri.parse('https://211.107.210.141:3000/users/signup/');
+    final url = Uri.parse('https://211.107.210.141:3001/users/signup/');
     try {
       final response = await http.post(
         url,

@@ -101,7 +101,7 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
   // 이미지를 보여주는 위젯
   Widget showImage() {
 
-    final String cameraurl = 'http://211.107.210.141:3000/images/' + widget.path;
+    final String cameraurl = 'http://211.107.210.141:3001/images/' + widget.path;
     print(cameraurl);
     // if(widget.path != "no"){
     //   array = receiveresult();
@@ -155,7 +155,7 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                 ? (widget.path == "no" ? Text('No image selected.') : Image
                 .network(cameraurl))
                 : galleryurl == '' ? Text('No url selected.') : Image.network(
-                'http://211.107.210.141:3000/images/' + galleryurl)));
+                'http://211.107.210.141:3001/images/' + galleryurl)));
   }
 
   List<F> data = [];
@@ -614,7 +614,7 @@ sendData(String? modon, String? lastresult) async {
   try {
 
     Response response = await dio.post(
-        'http://211.107.210.141:3000/ocrs/uploadimg/back',
+        'http://211.107.210.141:3001/ocrs/uploadimg/back',
         data: {
           'modon' : modon,
           'lastresult' : lastresult

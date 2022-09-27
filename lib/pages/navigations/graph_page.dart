@@ -1,13 +1,17 @@
 // import 'dart:ffi';
 import 'dart:ffi';
+// import 'dart:html';
 import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ocr/pages/api/upload_image.dart';
+
+late List<double> array_graph = List.filled(8, 0, growable: true);
+var int_list = List<int>.filled(5, 0);
+
 
 class GraphPage extends StatefulWidget {
   static const routeName = '/camera-page';
@@ -22,13 +26,9 @@ class GraphPage extends StatefulWidget {
 
 class _GraphPageState extends State<GraphPage> {
 
- // List<dynamic> graph_array = [];
-  late double max_value = 0.0;
-  late double min_value = 0.0;
-  late double average_value = 0.0;
+  //late List<double> array_graph = [10, 20, 30, 40, 0, 40 ,25, 0];
 
-  // Generate some dummy data for the cahrt
-  // This will be used to draw the red line
+
   final List<FlSpot> dummyData1 = List.generate(8, (index) {
     return FlSpot(index.toDouble(), index * Random().nextDouble());
   });
@@ -44,9 +44,8 @@ class _GraphPageState extends State<GraphPage> {
   List<String> spinnerItems = [
     "총산자수",
     "포유개시두수",
-    "생시체중",
     "이유두수",
-    "이유체중" ];
+    "교백복수"];
 
 
   DateTime startDate = DateTime.now() ;
@@ -75,16 +74,7 @@ class _GraphPageState extends State<GraphPage> {
       });
   }
 
-  void graph_array() {
-    print("그래프 데이터 가져올거임?????????");
-    final array_graph = receiveresult_graph();
-    print("그래프 데이터 가져왔음!!!!!!!!!!");
-    print(array_graph);
-    // max_value = array[array.length-2] as double;
-    // print(max_value);
-
-  }
-
+  //final List array_graph = [];
 
   Future<Null> showPicker2(BuildContext context) async {
 
@@ -154,12 +144,32 @@ class _GraphPageState extends State<GraphPage> {
               children: [
                 RaisedButton(
                     child: Text('그래프보기'),
-                   // onPressed: () => sendGraph(startDate.toString(), stopDate.toString(), dropdownValue.toString()),
-                    onPressed: () {
-                      sendGraph(startDate.toString(), stopDate.toString(), dropdownValue.toString());
-                      graph_array();
-                    },
+                    // onPressed: () => sendGraph(startDate.toString(), stopDate.toString(), dropdownValue.toString()),
+                    onPressed: () async{
+                      var a = await sendGraph(dropdownValue.toString());
+                      //make_mainChart(a);
+                      print(a);
+                      mainChart();
 
+                      array_graph[0] = a[0].toDouble();
+                      array_graph[1] = a[1].toDouble();
+                      array_graph[2] = a[2].toDouble();
+                      array_graph[3] = a[3].toDouble();
+                      array_graph[4] = a[4].toDouble();
+                      array_graph[5] = a[5].toDouble();
+                      array_graph[6] = a[6].toDouble();
+                      array_graph[7] = a[7].toDouble();
+                      int_list[0] = a[4].toInt();
+                      int_list[1] = a[6].toInt();
+
+
+                      print(array_graph);
+                      print(int_list);
+
+                      //make_mainChart(a);
+                      // mainChart2(a);
+
+                    },
                     color: Colors.white,
                     textColor: Colors.black,
                     padding: EdgeInsets.fromLTRB(10, 10, 10, 10)
@@ -175,10 +185,9 @@ class _GraphPageState extends State<GraphPage> {
                         ),
                         color: Color(0xffffffff)),
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                       child: LineChart(
-                        showAvg ? mainChart() : mainChart(),
-
+                        mainChart(),
                       ),
                     ),
                   ),)
@@ -191,19 +200,17 @@ class _GraphPageState extends State<GraphPage> {
   }
 }
 
-sendGraph(String? start_day, String? stop_day, String? number) async {
+sendGraph(String? number) async {
   Dio dio = new Dio();
 
   try {
     Response response = await dio.post(
-        'http://211.107.210.141:3000/statistic',
+        'http://211.107.210.141:3001/statistic',
         data: {
-          'startdate' : start_day,
-          'enddate' : stop_day,
           'sqlcol' : number
         }
     );
-    return response.statusCode;
+    return response.data['result'];
   } catch (e) {
     Exception(e);
   } finally {
@@ -216,6 +223,8 @@ sendGraph(String? start_day, String? stop_day, String? number) async {
 
 LineChartData mainChart() {
 
+
+
   List<Color> gradientColors_values = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
@@ -226,10 +235,28 @@ LineChartData mainChart() {
     const Color(0xffffdd00),
   ];
 
+  // array_graph = receiveresult_graph();
+  print("main 그래프 페이지 값 ");
+  // print(array_graph);
+  //var oneweek  = array_graph[0] as double;
+  final oneweek = array_graph[0];
+  final  twoweek = array_graph[1];
+  final threeweek = array_graph[2];
+  final fourweek = array_graph[3];
+  final goal = array_graph[4];
+  final minvalue = array_graph[5];
+  final maxvalue = array_graph[6];
+  final middlevalue = array_graph[7];
+  final int_goal = int_list[0];
+  final int_max = int_list[1];
+
   return LineChartData(
+
     gridData: FlGridData(
       show: true,
       drawVerticalLine: true,
+      horizontalInterval: 10,
+      drawHorizontalLine: true,
       getDrawingHorizontalLine: (value) {
         return FlLine(
           color: Color(0xff000000),
@@ -254,14 +281,16 @@ LineChartData mainChart() {
             fontWeight: FontWeight.bold,
             fontSize: 16),
         getTitles: (value) {
-          print('bottomTitles $value');
+          // print('bottomTitles $value');
           switch (value.toInt()) {
-            case 2:
-              return 'MAR';
-            case 5:
-              return 'JUN';
-            case 8:
-              return 'SEP';
+            case 0:
+              return '1주';
+            case 3:
+              return '2주';
+            case 6:
+              return '3주';
+            case 9:
+              return '4주';
           }
           return '';
         },
@@ -269,20 +298,22 @@ LineChartData mainChart() {
       ),
       leftTitles: SideTitles(
         showTitles: true,
+        interval: 10,
         textStyle: const TextStyle(
           color: Color(0xff000000),
           fontWeight: FontWeight.bold,
           fontSize: 15,
         ),
         getTitles: (value) {
-          print('leftTitles $value');
-          switch (value.toInt()) {
-            case 1:
-              return '10k';
-            case 3:
-              return '30k';
-            case 5:
-              return '50k';
+          // print('leftTitles $value');
+          if (value.toInt() == minvalue) {
+            return minvalue.toInt().toString();
+          }else if(value.toInt() == maxvalue){
+            return maxvalue.toInt().toString();
+          }else if(value.toInt() == goal){
+            return goal.toInt().toString();
+          }else{
+            return value.toInt().toString();
           }
           return '';
         },
@@ -290,23 +321,20 @@ LineChartData mainChart() {
         margin: 12,
       ),
     ),
-    borderData: FlBorderData(
-        show: true,
-        border: Border.all(color: const Color(0xff000000), width: 1)),
+    // // borderData: FlBorderData(
+    // //     show: true,
+    // //     border: Border.all(color: const Color(0xff000000), width: 1)),
     minX: 0,
-    maxX: 11,
+    maxX: 9,
     minY: 0,
-    maxY: 6,
+    maxY: 40,
     lineBarsData: [
       LineChartBarData(
         spots: [
-          FlSpot(0, 3),
-          FlSpot(2.6, 2),
-          FlSpot(4.9, 5),
-          FlSpot(6.8, 3.1),
-          FlSpot(8, 4),
-          FlSpot(9.5, 3),
-          FlSpot(11, 4),
+          FlSpot(0, oneweek),
+          FlSpot(3, twoweek),
+          FlSpot(6, threeweek),
+          FlSpot(9, fourweek),
         ],
 
         isCurved: true,
@@ -316,21 +344,13 @@ LineChartData mainChart() {
         dotData: FlDotData(
           show: true,
         ),
-        belowBarData: BarAreaData(
-          show: true,
-          colors:
-          gradientColors_values.map((color) => color.withOpacity(0.3)).toList(),
-        ),
       ),
       LineChartBarData(
         spots: [
-          FlSpot(0, 3.44),
-          FlSpot(2.6, 3.44),
-          FlSpot(4.9, 3.44),
-          FlSpot(6.8, 3.44),
-          FlSpot(8, 3.44),
-          FlSpot(9.5, 3.44),
-          FlSpot(11, 3.44),
+          FlSpot(0, goal),
+          FlSpot(3, goal),
+          FlSpot(6, goal),
+          FlSpot(9, goal),
         ],
         isCurved: true,
         colors: gradientColors_avg,
@@ -339,12 +359,6 @@ LineChartData mainChart() {
         dotData: FlDotData(
           show: true,
         ),
-        // belowBarData: BarAreaData(
-        //   show: true,
-        //   colors:
-        //   gradientColors_avg.map((color) => color.withOpacity(0.3)).toList(),
-        // ),
-
       ),
     ],
 

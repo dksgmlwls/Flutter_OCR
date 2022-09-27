@@ -78,11 +78,9 @@ class _UseCameraPageState extends State<UseCameraPage> {
   String galleryurl = '';
 
   //final List<dynamic> array = [];
+
   List<dynamic> array = [];
 
-  //late final String pig_num = "ㄴㅁㅇㅁㄹ";
-  //late final String birth_year, birth_month, birth_day, buy_year, buy_month, buy_day, rutting_year, rutting_month, rutting_day, et_ruting_date, delivery_date,
-  //baby_meal_day,male_pig_num, baby_num_born, baby_num_survive, rutting_second, survive_baby_num, teenager_weight, estimated_delivery_date, baby_weight, memo;
   // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
   Future getImage(ImageSource imageSource) async {
     final image = await picker.pickImage(source: imageSource);
@@ -101,7 +99,7 @@ class _UseCameraPageState extends State<UseCameraPage> {
   // 이미지를 보여주는 위젯
   Widget showImage() {
 
-    final String cameraurl = 'http://211.107.210.141:3000/images/' + widget.path;
+    final String cameraurl = 'http://211.107.210.141:3001/images/' + widget.path;
     print(cameraurl);
     // if(widget.path != "no"){
     //   array = receiveresult();
@@ -125,7 +123,7 @@ class _UseCameraPageState extends State<UseCameraPage> {
                 ? (widget.path == "no" ? Text('No image selected.') : Image
                 .network(cameraurl))
                 : galleryurl == '' ? Text('No url selected.') : Image.network(
-                'http://211.107.210.141:3000/images/' + galleryurl)));
+                'http://211.107.210.141:3001/images/' + galleryurl)));
   }
 
   List<F> data = [];
@@ -195,7 +193,6 @@ class _UseCameraPageState extends State<UseCameraPage> {
       vaccine3 = array[20];
       vaccine4 = array[21];
       memo = array[22];
-
 
     }else{
       array = [];
@@ -574,7 +571,7 @@ sendData(String? modon, String? lastresult) async {
   try {
 
     Response response = await dio.post(
-        'http://211.107.210.141:3000/ocrs/uploadimg/front/',
+        'http://211.107.210.141:3001/ocrs/uploadimg/front/',
         data: {
           'modon' : modon,
           'lastresult' : lastresult
@@ -582,6 +579,7 @@ sendData(String? modon, String? lastresult) async {
     );
 
     final jsonBody = response.data;
+    print("응답임" + response.data );
     return response.statusCode;
   } catch (e) {
     Exception(e);

@@ -7,6 +7,8 @@ import 'package:ocr/src/customization/calendar_style.dart';
 import 'package:ocr/src/customization/header_style.dart';
 import 'package:ocr/src/shared/utils.dart';
 import 'package:ocr/src/table_calendar.dart';
+import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
+import 'package:flutter_clean_calendar/clean_calendar_event.dart';
 
 class MemoryPage extends StatefulWidget {
   static const routeName = '/camera-page';
@@ -57,112 +59,98 @@ class FindUserMine extends StatefulWidget {
 }
 
 class _FindUserMineState extends State<FindUserMine> {
-  final formKey_mine = GlobalKey<FormState>();
-  late Map<DateTime, List<Event>> selectedEvents_mine;
-  CalendarFormat format_mine = CalendarFormat.month;
-  DateTime selectedDay_mine = DateTime.now();
-  DateTime focusedDay_mine = DateTime.now();
-  TextEditingController _eventController_mine = TextEditingController();
+
+  DateTime? selectedDay;
+  List <CleanCalendarEvent>? selectedEvent;
+
+  final Map<DateTime,List<CleanCalendarEvent>> events = {
+    DateTime (DateTime.now().year,DateTime.now().month,DateTime.now().day):
+    [
+      CleanCalendarEvent('Event A',
+          startTime: DateTime(
+              DateTime.now().year,DateTime.now().month,DateTime.now().day,10,0),
+          endTime:  DateTime(
+              DateTime.now().year,DateTime.now().month,DateTime.now().day,12,0),
+          description: 'A special event',
+          color: Colors.blue),
+    ],
+
+    DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2):
+    [
+      CleanCalendarEvent('Event B',
+          startTime: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day + 2, 10, 0),
+          endTime: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day + 2, 12, 0),
+          color: Colors.orange),
+      CleanCalendarEvent('Event C',
+          startTime: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day + 2, 14, 30),
+          endTime: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day + 2, 17, 0),
+          color: Colors.pink),
+    ],
+  };
+
+  void _handleData(date){
+    setState(() {
+      selectedDay = date;
+      selectedEvent = events[selectedDay] ?? [];
+    });
+    print(selectedDay);
+    //서버로 날짜 전송
+  }
 
   @override
   void initState() {
-    selectedEvents_mine = {};
+    // TODO: implement initState
+    selectedEvent = events[selectedDay] ?? [];
     super.initState();
   }
-
-  List<Event> _getEventsfromDay(DateTime date) {
-    return selectedEvents_mine[date] ?? [];
-  }
-
-  @override
-  void dispose() {
-    _eventController_mine.dispose();
-    super.dispose();
-  }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          TableCalendar(
-            focusedDay: selectedDay_mine,
-            firstDay: DateTime(2022),
-            lastDay: DateTime(2101),
-            calendarFormat: format_mine,
-            onFormatChanged: (CalendarFormat _format){
-              setState(() {
-                format_mine = _format;
-              });
+      body:  SafeArea(
+        child: Container(
+          child: Calendar(
+            startOnMonday: true,
+            locale: 'ko-KR',
+            selectedColor: Colors.blue,
+            todayColor: Colors.red,
+            eventColor: Colors.green,
+            eventDoneColor: Colors.amber,
+            bottomBarColor: Colors.deepOrange,
+            todayButtonText: '',
+            // onRangeSelected: (range) {
+            //   print('selected Day ${range.from},${range.to}');
+            // },
+            onDateSelected: (date){
+              print("날짜선탥했슈");
+              //sendRecordMine(date.toString());
+              return _handleData(date);
             },
-            startingDayOfWeek: StartingDayOfWeek.sunday,
-            daysOfWeekVisible: true,
-
-            //Day Changed
-            onDaySelected: (DateTime selectDay, DateTime focusDay){
-              setState(() {
-                selectedDay_mine = selectDay;
-                focusedDay_mine = focusDay;
-              });
-              print(focusedDay_mine);
+            onEventSelected: (date){
+              print("이벤트선택했슈");
             },
-            selectedDayPredicate: (DateTime date){
-              sendRecord(_eventController_mine.text);
-              return isSameDay(selectedDay_mine, date);
-            },
-
-            eventLoader: _getEventsfromDay,
-
-            //To style the calendar
-            calendarStyle: CalendarStyle(
-              isTodayHighlighted: true,
-              selectedDecoration: BoxDecoration(
-                color: Colors.blue,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              selectedTextStyle: TextStyle(color: Colors.white),
-              todayDecoration: BoxDecoration(
-                color: Colors.purpleAccent,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              defaultDecoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              weekendDecoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
+            events: events,
+            isExpanded: true,
+            dayOfWeekStyle: TextStyle(
+              fontSize: 17,
+              color: Colors.black,
+              fontWeight: FontWeight.w100,
             ),
-            headerStyle: HeaderStyle(
-                formatButtonVisible: true,
-                titleCentered: true,
-                formatButtonShowsNext: false,
-                formatButtonDecoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                formatButtonTextStyle: TextStyle(
-                  color: Colors.white,
-                ),
-
+            bottomBarTextStyle: TextStyle(
+              color: Colors.white,
             ),
+            hideBottomBar: false,
+            hideArrows: false,
+            weekDays: ['월','화','수','목','금','토','일'],
           ),
-
-        ],
+        ),
       ),
-
     );
   }
-}
-
-class Event {
-  final String title;
-  Event({required this.title});
-  String toString() => this.title;
 }
 
 class FindUserEverybody extends StatefulWidget {
@@ -171,114 +159,128 @@ class FindUserEverybody extends StatefulWidget {
 }
 
 class _FindUserEverybodyState extends State<FindUserEverybody> {
-  final formKey_every = GlobalKey<FormState>();
 
-  late Map<DateTime, List<Event>> selectedEvents_every;
-  CalendarFormat format_every = CalendarFormat.month;
-  DateTime selectedDay_every = DateTime.now();
-  DateTime focusedDay_every = DateTime.now();
-  TextEditingController _eventController_every = TextEditingController();
+  DateTime? selectedDay;
+  List <CleanCalendarEvent>? selectedEvent;
 
+  final Map<DateTime,List<CleanCalendarEvent>> events = {
+    DateTime (DateTime.now().year,DateTime.now().month,DateTime.now().day):
+    [
+      CleanCalendarEvent('Event A',
+          startTime: DateTime(
+              DateTime.now().year,DateTime.now().month,DateTime.now().day,10,0),
+          endTime:  DateTime(
+              DateTime.now().year,DateTime.now().month,DateTime.now().day,12,0),
+          description: 'A special event',
+          color: Colors.blue),
+    ],
+
+    DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2):
+    [
+      CleanCalendarEvent('Event B',
+          startTime: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day + 2, 10, 0),
+          endTime: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day + 2, 12, 0),
+          color: Colors.orange),
+      CleanCalendarEvent('Event C',
+          startTime: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day + 2, 14, 30),
+          endTime: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day + 2, 17, 0),
+          color: Colors.pink),
+    ],
+  };
+
+  void _handleData(date){
+    setState(() {
+      selectedDay = date;
+      selectedEvent = events[selectedDay] ?? [];
+    });
+    print(selectedDay);
+   // sendRecordEvery(selectedDay.toString());
+  }
   @override
   void initState() {
-    selectedEvents_every = {};
+    // TODO: implement initState
+    selectedEvent = events[selectedDay] ?? [];
     super.initState();
   }
-
-  List<Event> _getEventsfromDay(DateTime date) {
-    return selectedEvents_every[date] ?? [];
-  }
-
-  @override
-  void dispose() {
-    _eventController_every.dispose();
-    super.dispose();
-  }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          TableCalendar(
-            focusedDay: selectedDay_every,
-            firstDay: DateTime(2022),
-            lastDay: DateTime(2101),
-            calendarFormat: format_every,
-            onFormatChanged: (CalendarFormat _format){
-              setState(() {
-                format_every = _format;
-              });
+      body:  SafeArea(
+        child: Container(
+          child: Calendar(
+            startOnMonday: true,
+            locale: 'ko-KR',
+            selectedColor: Colors.blue,
+            todayColor: Colors.red,
+            eventColor: Colors.green,
+            eventDoneColor: Colors.amber,
+            todayButtonText: '',
+            bottomBarColor: Colors.deepOrange,
+            // onRangeSelected: (range) {
+            //   print("날자 선택?");
+            //   print('selected Day ${range.from},${range.to}');
+            // },
+            onDateSelected: (date){
+              print("날짜선택맞지?????/");
+              //sendRecordEvery(date.toString());
+              return _handleData(date);
             },
-            startingDayOfWeek: StartingDayOfWeek.sunday,
-            daysOfWeekVisible: true,
-
-            //Day Changed
-            onDaySelected: (DateTime selectDay, DateTime focusDay){
-              setState(() {
-                selectedDay_every = selectDay;
-                focusedDay_every = focusDay;
-              });
-              print(focusedDay_every);
-              sendRecord(_eventController_every.text);
+            onEventSelected: (date){
+              print("이벤트선택했슈");
             },
-            selectedDayPredicate: (DateTime date){
-              return isSameDay(selectedDay_every, date);
-            },
-
-            eventLoader: _getEventsfromDay,
-
-            //To style the calendar
-            calendarStyle: CalendarStyle(
-              isTodayHighlighted: true,
-              selectedDecoration: BoxDecoration(
-                color: Colors.blue,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              selectedTextStyle: TextStyle(color: Colors.white),
-              todayDecoration: BoxDecoration(
-                color: Colors.purpleAccent,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              defaultDecoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              weekendDecoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
+            events: events,
+            isExpanded: true,
+            dayOfWeekStyle: TextStyle(
+              fontSize: 17,
+              color: Colors.black,
+              fontWeight: FontWeight.w100,
             ),
-            headerStyle: HeaderStyle(
-              formatButtonVisible: true,
-              titleCentered: true,
-              formatButtonShowsNext: false,
-              formatButtonDecoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              formatButtonTextStyle: TextStyle(
-                color: Colors.white,
-              ),
-
+            bottomBarTextStyle: TextStyle(
+              color: Colors.grey,
             ),
+            hideBottomBar: false,
+            hideArrows: false,
+            weekDays: ['월','화','수','목','금','토','일'],
           ),
-        ],
+        ),
       ),
-
     );
   }
 }
 
-sendRecord(String? day) async {
+
+//서버로 사용자가 선택한 날짜 전송(내 기록보기)
+sendRecordMine(String? day) async {
   Dio dio = new Dio();
 
   try {
     Response response = await dio.post(
-        'http://211.107.210.141:3000/statistic',
+        'http://211.107.210.141:3001/statistic',
+        data: {
+          'startdate' : day,
+        }
+    );
+    return response.statusCode;
+  } catch (e) {
+    Exception(e);
+  } finally {
+    dio.close();
+  }
+  return 0;
+}
+
+//서버로 사용자가 선택한 날짜 전송(모든 기록보기)
+sendRecordEvery(String? day) async {
+  Dio dio = new Dio();
+
+  try {
+    Response response = await dio.post(
+        'http://211.107.210.141:3001/statistic',
         data: {
           'startdate' : day,
         }

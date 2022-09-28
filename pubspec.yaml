@@ -54,6 +54,7 @@ dependencies:
   flutter_camera_overlay: ^0.1.1
   path: ^1.7.0
   #path_provider: ^1.6.18
+  date_format: ^1.0.6
   dio: ^4.0.0
   http: ^0.13.4
   editable: ^1.1.2

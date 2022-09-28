@@ -8,7 +8,7 @@ import 'package:http_parser/http_parser.dart';
 import '../home_page.dart';
 
 //late List<dynamic> array = List.filled(30, "",growable: true);
-late List<String> array = List.filled(30, "",growable: true);
+late List<String> array = List.filled(35, "",growable: true);
 late List<String> array_graph = List.filled(8, "", growable: true);
 
 
@@ -96,7 +96,7 @@ uploadimg_front(String imagePath) async {
           filename: fileName, contentType:MediaType("image","jpg")),
     });
     Response response = await dio.post(
-        'http://211.107.210.141:3001/ocrs/uploadimg/front/',
+        'http://211.107.210.141:4000/ocrs/uploadimg/front/',
         data:_formData
     );
     print(response);

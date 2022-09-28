@@ -39,7 +39,11 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
   File? _image;
   final picker = ImagePicker();
 
-  late String sowID ='';
+  late String sowID1 ='';
+  late String sowID2 ='';
+  late String sowID3 ='';
+  late String sowID4 ='';
+  late String sowID5 ='';
 
   late String birth_year ='';
   late String birth_month ='';
@@ -73,6 +77,7 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
   late String memo = '';
 
   late String lastresult ='';
+  late String modon = '';
   late String title = '';
 
   String galleryurl = '';
@@ -101,7 +106,7 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
   // 이미지를 보여주는 위젯
   Widget showImage() {
 
-    final String cameraurl = 'http://211.107.210.141:3001/images/' + widget.path;
+    final String cameraurl = 'http://211.107.210.141:4000/images/' + widget.path;
     print(cameraurl);
     // if(widget.path != "no"){
     //   array = receiveresult();
@@ -155,12 +160,16 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                 ? (widget.path == "no" ? Text('No image selected.') : Image
                 .network(cameraurl))
                 : galleryurl == '' ? Text('No url selected.') : Image.network(
-                'http://211.107.210.141:3001/images/' + galleryurl)));
+                'http://211.107.210.141:4000/images/' + galleryurl)));
   }
 
   List<F> data = [];
 
-  final sowID_Controller = TextEditingController();
+  final sowID1_Controller = TextEditingController();
+  final sowID2_Controller = TextEditingController();
+  final sowID3_Controller = TextEditingController();
+  final sowID4_Controller = TextEditingController();
+  final sowID5_Controller = TextEditingController();
   final birth_year_Controller = TextEditingController();
   final birth_month_Controller = TextEditingController();
   final birth_day_Controller = TextEditingController();
@@ -201,38 +210,43 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
       //array=['1','2','3'];
       print(array);
       print(array.length);
-      String title;
-      sowID = array[0];
-      birth_year = array[1];
-      birth_month = array[2];
-      birth_day = array[3];
 
-      adoption_year = array[4];
-      adoption_month = array[5];
-      adoption_day = array[6];
+      sowID1 = array[0];
+      sowID2 = array[1];
+      sowID3 = array[2];
+      sowID4 = array[3];
+      sowID5 = array[4];
 
-      expect_month = array[7];
-      expect_day = array[8];
+      birth_year = array[5];
+      birth_month = array[6];
+      birth_day = array[7];
 
-      givebirth_month = array[9];
-      givebirth_day = array[10];
+      adoption_year = array[8];
+      adoption_month = array[9];
+      adoption_day = array[10];
 
-      totalbaby = array[11];
-      feedbaby = array[12];
-      weight = array[13];
+      expect_month = array[11];
+      expect_day = array[12];
 
-      teen_month = array[14];
-      teen_day = array[15];
+      givebirth_month = array[13];
+      givebirth_day = array[14];
 
-      totalteen = array[16];
-      teenweight = array[17];
+      totalbaby = array[15];
+      feedbaby = array[16];
+      weight = array[17];
 
-      vaccine1 = array[18];
-      vaccine2 = array[19];
-      vaccine3 = array[20];
-      vaccine4 = array[21];
+      teen_month = array[18];
+      teen_day = array[19];
 
-      memo = array[22];
+      totalteen = array[20];
+      teenweight = array[21];
+
+      vaccine1 = array[22];
+      vaccine2 = array[23];
+      vaccine3 = array[24];
+      vaccine4 = array[25];
+
+      memo = array[26];
 
 
     }else{
@@ -252,7 +266,7 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
             children: <Widget>[
               Container(
                 child: Table(
-                  defaultColumnWidth: FixedColumnWidth(160.0),
+                  defaultColumnWidth: FixedColumnWidth(45.7142857),
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle, // 표 가운데 정렬
                   border: TableBorder(
                     // color: Colors.white,
@@ -268,7 +282,22 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                       Column(children: [Text('모돈번호',
                           style: TextStyle(fontSize: 20.0))
                       ]),
-                      Column(children: [TextField(controller: sowID_Controller,
+                      Column(children: [TextField(controller: sowID1_Controller,
+                        decoration: const InputDecoration(hintText: " "),)
+                      ]),
+                      Column(children: [TextField(controller: sowID2_Controller,
+                        decoration: const InputDecoration(hintText: " "),)
+                      ]),
+                      Column(children: [TextField(controller: sowID3_Controller,
+                        decoration: const InputDecoration(hintText: " "),)
+                      ]),
+                      Column(children: [TextField(controller: sowID4_Controller,
+                        decoration: const InputDecoration(hintText: " "),)
+                      ]),
+                      Column(children: [Text('-',
+                          style: TextStyle(fontSize: 20.0))
+                      ]),
+                      Column(children: [TextField(controller: sowID5_Controller,
                         decoration: const InputDecoration(hintText: " "),)
                       ]),
                     ]),
@@ -589,16 +618,18 @@ class _UseCameraPageState2 extends State<UseCameraPage2> {
                   child: Icon(Icons.arrow_circle_right_sharp),
                   tooltip: 'pick Iamge',
                   onPressed: () async{
-                    lastresult = sowID_Controller.text + "," + sowID_Controller.text + "," + birth_year_Controller.text + "," +
-                                  birth_month_Controller.text + "," +birth_day_Controller.text+ "," + adoption_year_Controller.text + "," + adoption_month_Controller.text
+                    lastresult = sowID1_Controller.text + "," + sowID1_Controller.text + "," + sowID2_Controller.text + ","+ sowID3_Controller.text + ","+ sowID4_Controller.text + ","
+                        + sowID5_Controller.text + ","+ birth_year_Controller.text + "," + birth_month_Controller.text + "," +birth_day_Controller.text+ "," + adoption_year_Controller.text + "," + adoption_month_Controller.text
                         + "," + adoption_day_Controller.text + "," + expect_month_Controller.text + "," + expect_day_Controller.text
                         + "," + givebirth_month_Controller.text + "," +givebirth_day_Controller.text + "," + totalbaby_Controller.text
                         + "," + feedbaby_Controller.text+ "," +weight_Controller.text+ "," +teen_month_Controller.text+ "," + teen_day_Controller.text
                         + "," + totalteen_Controller.text + "," + teenweight_Controller.text + "," +vaccine1_Controller.text + "," + vaccine2_Controller.text
                         + "," + vaccine3_Controller.text + "," + vaccine4_Controller.text+ "," + memo_Controller.text;
                     // sowID = '';
-                    print(sowID_Controller.text);
+                    modon = sowID1_Controller.text + "," + sowID1_Controller.text + "," + sowID2_Controller.text + ","+ sowID3_Controller.text + ","+ sowID4_Controller.text + "," + sowID5_Controller.text;
+                    print(sowID1_Controller.text);
                     // getImage(ImageSource.gallery);
+                    sendData(modon, lastresult);
                   },
                 ),
               ])
@@ -614,7 +645,7 @@ sendData(String? modon, String? lastresult) async {
   try {
 
     Response response = await dio.post(
-        'http://211.107.210.141:3001/ocrs/uploadimg/back',
+        'http://211.107.210.141:4000/ocrs/uploadimg/back',
         data: {
           'modon' : modon,
           'lastresult' : lastresult

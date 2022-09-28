@@ -205,7 +205,7 @@ sendGraph(String? number) async {
 
   try {
     Response response = await dio.post(
-        'http://211.107.210.141:3001/statistic',
+        'http://211.107.210.141:4000/statistic',
         data: {
           'sqlcol' : number
         }
